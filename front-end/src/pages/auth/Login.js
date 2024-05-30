@@ -45,7 +45,7 @@ function Login() {
 
   if (isLoading) {
     return (
-      <div className='loading'>
+      <div className='loading flex row'>
         <div></div>
         <div></div>
         <div></div>
