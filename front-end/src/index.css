@@ -39,9 +39,12 @@ body {
   align-items: center;
 }
 
-.form-container {
+.form-container,.error-div, .success-div {
   width: 40%;
   border-radius: 1rem;
+}
+
+.form-container {
   background-color: var(--modal-background);
 }
 
@@ -81,4 +84,12 @@ body {
   color: var(--text-white);
   margin: 1% 0;
   font-size: medium;
+}
+
+.error-div {
+  background-color: rgba(226, 46, 46, 0.905)
+}
+
+.success-div {
+  background-color: rgba(46, 246, 46, 0.905);
 }
