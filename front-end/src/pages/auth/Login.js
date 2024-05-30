@@ -22,7 +22,7 @@ function Login() {
     e.preventDefault();
     setIsLoading(true)
     try {
-      const {data : {person, token}} = await axios.post('http://localhost:3000/api/v1/cms/auth/register', loginInfo)
+      const {data : {person, token}} = await axios.post('http://localhost:3000/api/v1/cms/auth/login', loginInfo)
 
       localStorage.token = token;
       localStorage.email = person.email
@@ -54,7 +54,7 @@ function Login() {
     )
   }
   return (
-    <section className='auth-section'>
+    <section className='auth-section flex column center'>
       {
         isTrue && <div className='success-div'>
           <p>Registered user successfully</p>
@@ -65,11 +65,11 @@ function Login() {
           <p>{error.msg}</p>
         </div>
       }
-      <div className='form-container'>
+      <div className='form-container flex column center'>
         <form onSubmit={handleSubmit} onChange={handleChange} className='form'>
           <FormRow type='email' name='email' id='email' value={loginInfo.email}/>
           <FormRow type='password' name='password' id='password' value={loginInfo.password}/>
-          <button type='submit' className='btn submit-btn'>Register</button>
+          <button type='submit' className='submit-btn'>Login</button>
         </form>
         <p style={{textAlign: 'center', marginBottom: '2%'}}>
           Do not have an account?
