@@ -151,6 +151,7 @@ body {
 .form-container,.error-div, .success-div {
   width: 40%;
   border-radius: 1rem;
+  text-align: center;
 }
 
 .form-container {
@@ -196,9 +197,11 @@ body {
 }
 
 .error-div {
-  background-color: rgba(226, 46, 46, 0.905)
+  background-color: rgba(226, 46, 46, 0.905);
+  margin: auto;
 }
 
 .success-div {
   background-color: rgba(46, 246, 46, 0.905);
+  margin: auto;
 }

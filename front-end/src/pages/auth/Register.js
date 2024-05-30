@@ -56,7 +56,7 @@ function Register() {
 
   if (isLoading) {
     return (
-      <div className='loading flex row'>
+      <div className='loading'>
         <div></div>
         <div></div>
         <div></div>
