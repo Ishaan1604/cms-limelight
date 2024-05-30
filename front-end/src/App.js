@@ -1,7 +1,7 @@
 import './index.css';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import {Home, Claims, Policies, Policy, UserPolicies} from './pages/user'
-import {ProtectedRoute, ProtectedRouteAdmin} from './components'
+import {ProtectedRoute, ProtectedRouteAdmin, Error} from './components'
 import {Login, Register, ResetPassword} from './pages/auth'
 import {PoliciesAdmin, ClaimsAdmin, Users} from './pages/admin'
 
@@ -27,6 +27,7 @@ function App() {
           <Route path='users' element={<ProtectedRouteAdmin element={<Users />}/>}/>
           <Route path='claims' element={<ProtectedRouteAdmin element={<ClaimsAdmin />}/>}/>
         </Route>
+        <Route path='*' element={<Error/>}></Route>
       </Routes>
     </Router>
   );

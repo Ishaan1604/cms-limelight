@@ -1,9 +1,9 @@
 import React from 'react'
-import {userNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import {useGlobalContext} from '../context'
 
 function ProtectedRoute({element}) {
-  const navigate = userNavigate()
+  const navigate = useNavigate()
   const {setContent} = useGlobalContext()
 
   let isAuthenticated = true;
