@@ -40,7 +40,6 @@ function Register() {
       setIsTrue(true)
       navigate(`/${person.name}`)
     } catch (error) {
-      console.log(error)
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
