@@ -182,6 +182,10 @@ body {
   width: 100%;
 }
 
+.form-row {
+  width: 100%;
+}
+
 .form-row > :nth-child(n) {
   width: 100%;
   margin: 1% 0;
@@ -278,12 +282,37 @@ body {
   margin-top: 1%;
 }
 
-.tile {
+.tile, .home-tile {
   width: 49%;
-  height: 19%;
   background: linear-gradient(var(--brand-light-purple), var(--brand-dark-purple));
   border-radius: 1rem;
   color: var(--text-white);
+}
+
+.tile {
+  height: 19%;
+}
+
+.home-tile {
+  height: 49%;
+}
+
+.home-tile > h1 {
+  width: 100%;
+  text-align: center;
+}
+
+.home-tile > :nth-child(n) {
+  margin: 1% 2%;
+}
+
+.home-tile > button {
+  background: transparent;
+  font-size: large;
+  border-radius: 1rem;
+  width: 40%;
+  border: none;
+  padding: 1% 0;
 }
 
 .tile > button {
@@ -292,7 +321,7 @@ body {
   font-size: large;
 }
 
-.tile > button:active, .tile > button:hover{
+.tile > button:active, .tile > button:hover, .home-tile > button:active, .home-tile > button:hover{
   background-color: var(--modal-background);
 }
 
@@ -302,8 +331,6 @@ body {
   font-weight: normal;
   width: 45%;
 }
-
- 
 
 .bold {
   font-weight: bolder;
