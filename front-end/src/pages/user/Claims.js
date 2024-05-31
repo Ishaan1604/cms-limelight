@@ -242,7 +242,7 @@ function Claims() {
         {
           claims.length > 0 ? claims.map((claim) => {
             return (
-              <div className='tile flex column'>
+              <div className='tile flex column' style={{justifyContent: 'center'}}>
                 <h3><span className='bold'>Policy Name: </span>{claim.policyName}</h3>
                 <h3><span className='bold'>Policy Type: </span>{claim.policyType}</h3>
                 <h3><span className='bold'>Claim Amount: </span>${claim.claimAmount}</h3>

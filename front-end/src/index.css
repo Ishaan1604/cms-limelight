@@ -2,7 +2,7 @@
   box-sizing: content-box;
   padding: 0;
   margin: 0;
-  /* border: 1px solid black; */
+  border: 1px solid black;
 }
 
 :root {
@@ -268,16 +268,17 @@ body {
 
 .tile {
   width: 49%;
+  height: 19%;
   background: linear-gradient(var(--brand-light-purple), var(--brand-dark-purple));
   border-radius: 1rem;
-  justify-content: center;
   color: var(--text-white);
 }
 
 .tile > :nth-child(n) {
-  margin: 0.5% 3%;
+  margin: 0.5% 2%;
   text-transform: capitalize;
   font-weight: normal;
+  width: 45%;
 }
 
 .bold {
