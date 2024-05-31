@@ -10,6 +10,7 @@
   --main-background: rgb(244, 254, 255);
   --modal-background: rgba(0, 0, 0, 0.5);
   --form-background: rgba(0, 0, 0, 0.522);
+  --input-background: rgba(255, 255, 255, 0.498);
   --brand-light-purple: rgba(137, 53, 216, 0.835);
   --brand-dark-purple: rgba(108, 32, 179, 0.835);
 }
@@ -240,7 +241,8 @@ body {
 }
 
 .side-bar > input {
-  background-color: var(--modal-background);
+  background-color: var(--input-background);
+  border: 1px solid black;
   width: 90%;
   margin-top: 5%;
 }
