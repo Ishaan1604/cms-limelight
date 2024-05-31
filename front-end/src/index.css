@@ -2,13 +2,14 @@
   box-sizing: content-box;
   padding: 0;
   margin: 0;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 
 :root {
   --text-white: rgba(255, 255, 255, 0.9);
   --main-background: rgb(244, 254, 255);
-  --modal-background: rgba(0, 0, 0, 0.146);
+  --modal-background: rgba(0, 0, 0, 0.5);
+  --form-background: rgba(0, 0, 0, 0.522);
   --brand-light-purple: rgba(137, 53, 216, 0.835);
   --brand-dark-purple: rgba(108, 32, 179, 0.835);
 }
@@ -126,10 +127,17 @@ body {
   animation: loadingLabel 1s linear 0s infinite alternate;
 }
 
-.auth-section {
+.auth-section, .modal {
   width: 100vw;
   height: 100vh;  
 }
+
+.modal {
+  background-color: var(--modal-background);
+  position: absolute;
+  z-index: 1;
+}
+
 
 .flex {
   display: flex;
@@ -153,11 +161,10 @@ body {
 .form-container,.error-div, .success-div {
   width: 40%;
   border-radius: 1rem;
-  text-align: center;
 }
 
 .form-container {
-  background-color: var(--modal-background);
+  background-color: var(--form-background);
 }
 
 .form-container > :last-child {
@@ -181,6 +188,7 @@ body {
 
 .form-label {
   text-transform: capitalize;
+  color: var(--text-white)
 }
 
 .form-input {
@@ -204,11 +212,13 @@ body {
 .error-div {
   background-color: rgba(226, 46, 46, 0.905);
   margin: auto;
+  text-align: center;
 }
 
 .success-div {
   background-color: rgba(46, 246, 46, 0.905);
   margin: auto;
+  text-align: center;
 }
 
 .side-bar {
@@ -274,12 +284,24 @@ body {
   color: var(--text-white);
 }
 
+.tile > button {
+  background: transparent;
+  /* height: 30%; */
+  font-size: large;
+}
+
+.tile > button:active, .tile > button:hover{
+  background-color: var(--modal-background);
+}
+
 .tile > :nth-child(n) {
   margin: 0.5% 2%;
   text-transform: capitalize;
   font-weight: normal;
   width: 45%;
 }
+
+ 
 
 .bold {
   font-weight: bolder;
@@ -293,11 +315,23 @@ nav {
   justify-content: space-evenly;
 }
 
+nav > ul {
+  height: inherit
+}
+
 nav > ul > li {
   list-style: none;
+  height: inherit;
+  width: 30%;
 }
 
 nav > ul > li > a {
   text-decoration: none;
   color: var(--text-white);
+  height: inherit;
+  
+}
+
+nav > ul > li > a:active,  nav > ul > li > a:hover, nav > ul > li > a:enabled{
+  background-color: var(--modal-background);
 }

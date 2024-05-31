@@ -5,18 +5,18 @@ function NavBar() {
     <nav className='flex row'>
       <ul style={{width: '20%', fontSize: 'larger'}} className='flex row center'>
         <li>
-          <a href={`/${localStorage.name}`}>CMS</a>
+          <a className='flex row center' href={`/${localStorage.name}`}>CMS</a>
         </li>
       </ul>
       <ul className='flex row' style={{width: '60%', justifyContent: 'space-evenly'}}>
         <li>
-          <a href={`/${localStorage.name}/policies`}>Policies</a>
+          <a className='flex row center' href={`/${localStorage.name}/policies`}>Policies</a>
         </li>
         <li>
-          <a href={`/${localStorage.name}/myPolicies`}>My Policies</a>
+          <a className='flex row center' href={`/${localStorage.name}/myPolicies`}>My Policies</a>
         </li>
         <li>
-          <a href={`/${localStorage.name}/claims`}>Claims</a>
+          <a className='flex row center' href={`/${localStorage.name}/claims`}>Claims</a>
         </li>
       </ul>
     </nav>

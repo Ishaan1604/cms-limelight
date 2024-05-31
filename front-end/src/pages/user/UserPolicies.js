@@ -4,17 +4,19 @@ import axios from 'axios';
 import { CheckButton} from '../../components';
 import leftArrow from '../../assets/leftArrow.svg'
 import rightArrow from '../../assets/rightArrow.svg'
+import MakeClaim from './MakeClaim';
 
 function UserPolicies() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState({err: false, msg: null});
   const [policies, setPolicies] = useState([])
   const [queries, setQueries] = useState({page: 1, limit: 10})
+  const [claimModal, setClaimModal] = useState(false)
+  const [policyId, setPolicyId] = useState(null)
 
   const fetchData = async() => {
-    console.log(queries)
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/mypolicies?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
+      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
       //   headers: {
       //     Authorization: `Bearer ${localStorage.token}`
       //   }
@@ -22,6 +24,96 @@ function UserPolicies() {
 
       const data = {
         myPolicies: [
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            amountRemaining: 10000,
+            expired: 'false',
+            vailidity: '26-06-06T1234',
+          },
           {
             _id: 1,
             policyId: 1,
@@ -120,45 +212,60 @@ function UserPolicies() {
     )
   }
   return (
-    <section className='flex row'>
-      <NavBar/>
-      <div className='side-bar flex column' onChange={handleChange}>
-        <input type='text' name='policyName' id='policyName' value={queries.policyName}></input>
-        <button className='btn' onClick={() => window.location.reload()}>Reset Filters</button>
-        <h1>Filter By</h1>
-        <h3>Policy Type</h3>
-        <CheckButton id='policyType' names={['Health', 'Life', 'Auto', 'Travel', 'Property', 'Business', 'Renters', 'Homeowners', 'Disability', 'Liability', 'Pet', 'Critical Illness']} onClick={handleChange}/>
-        <h3>Expired</h3>
-        <CheckButton id='expired' names={['true', 'false']} onClick={handleChange}/>
-        <h1>Sort By</h1>
-        <CheckButton id='sort' names={['policyName', 'policyType', 'expired', 'validity']} onClick={handleChange}/>
-        <h1>Page</h1>
-        <div className='arrow-container flex row'>
-          <button name='left' id='left'><img src={leftArrow} alt='leftArrow'/></button>
-          <button name='right' id='right'><img src={rightArrow} alt='rightArrow'/></button>
-        </div>
-      </div>
-      <div className='tile-container flex row'>
-        {
-          policies.length > 0 ? policies.map((policy) => {
-            let [year, month, day] = policy.vailidity.split('-')
-            day = day.slice(0, 2)
-            const date = day + '/' + month + '/' + year
-            return (
-              <div className='tile flex row' style={{justifyContent: 'space-between', alignItems: 'center'}}>
-                <h3><span className='bold'>Policy Name: </span>{policy.policyName}</h3>
-                <h3><span className='bold'>Policy Type: </span>{policy.policyType}</h3>
-                <h3><span className='bold'>Amount Remaining: </span>${policy.amountRemaining}</h3>
-                <h3><span className='bold'>Validity: </span>{date}</h3>
-                <h3><span className='bold'>Status: </span>{policy.expired ? 'Expired' : 'Active'}</h3>
-              </div>
-            )
-          }) : <div className='tile'>
-            <h3>No Policies Found</h3>
+    <>
+      {
+        claimModal && <MakeClaim policyId={{policyId}} onClick={(e) => {
+          if (e.target.name === 'cancel') {
+            setClaimModal(false)
+            return;
+          }
+        }}/>
+      }
+      <section className='flex row'>
+        <NavBar/>
+        <div className='side-bar flex column' onChange={handleChange}>
+          <input type='text' name='policyName' id='policyName' value={queries.policyName}></input>
+          <button className='btn' onClick={() => window.location.reload()}>Reset Filters</button>
+          <h1>Filter By</h1>
+          <h3>Policy Type</h3>
+          <CheckButton id='policyType' names={['Health', 'Life', 'Auto', 'Travel', 'Property', 'Business', 'Renters', 'Homeowners', 'Disability', 'Liability', 'Pet', 'Critical Illness']} onClick={handleChange}/>
+          <h3>Expired</h3>
+          <CheckButton id='expired' names={['true', 'false']} onClick={handleChange}/>
+          <h1>Sort By</h1>
+          <CheckButton id='sort' names={['policyName', 'policyType', 'expired', 'validity']} onClick={handleChange}/>
+          <h1>Page</h1>
+          <div className='arrow-container flex row'>
+            <button name='left' id='left'><img src={leftArrow} alt='leftArrow'/></button>
+            <button name='right' id='right'><img src={rightArrow} alt='rightArrow'/></button>
           </div>
-        }
-      </div>
-    </section>
+        </div>
+        <div className='tile-container flex row'>
+          {
+            policies.length > 0 ? policies.map((policy) => {
+              let [year, month, day] = policy.vailidity.split('-')
+              day = day.slice(0, 2)
+              const date = day + '/' + month + '/' + year
+              return (
+                <div className='tile flex row' style={{justifyContent: 'space-between', alignItems: 'center'}}>
+                  <h3><span className='bold'>Policy Name: </span>{policy.policyName}</h3>
+                  <h3><span className='bold'>Policy Type: </span>{policy.policyType}</h3>
+                  <h3><span className='bold'>Amount Remaining: </span>${policy.amountRemaining}</h3>
+                  <h3><span className='bold'>Validity: </span>{date}</h3>
+                  <h3><span className='bold'>Status: </span>{policy.expired === 'true' ? 'Expired' : 'Active'}</h3>
+                  <h3></h3>
+                  <button className="btn" style={{margin: '0.5% auto'}} onClick={() => {
+                    setPolicyId(policy._id)
+                    setClaimModal(true)
+                  }}>Make A Claim</button>
+                </div>
+              )
+            }) : <div className='tile'>
+              <h3>No Policies Found</h3>
+            </div>
+          }
+        </div>
+      </section>
+    </>
   )
 }
 
