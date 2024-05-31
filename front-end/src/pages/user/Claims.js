@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import NavBar from './NavBar'
 import axios from 'axios';
 import { CheckButton} from '../../components';
+import leftArrow from '../../assets/leftArrow.svg'
+import rightArrow from '../../assets/rightArrow.svg'
 
 function Claims() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState({err: false, msg: null});
   const [claims, setClaims] = useState([])
-  const [queries, setQueries] = useState({})
+  const [queries, setQueries] = useState({page: 1, limit: 10})
 
   const fetchData = async() => {
     console.log(queries)
@@ -20,6 +22,105 @@ function Claims() {
 
       const data = {
         claims: [
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
+          {
+            _id: 1,
+            policyId: 1,
+            userId: 1,
+            policyName: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            claimAmount: 10000,
+            status: 'pending',
+            document: null,
+          },
           {
             _id: 1,
             policyId: 1,
@@ -86,6 +187,14 @@ function Claims() {
       return;
     }
 
+    if (e.target.name === 'left' && queries.page > 1) {
+      setQueries({...queries, page: queries.page - 1})
+    }
+
+    if (e.target.name === 'right' && claims.length === queries.limit) {
+      setQueries({...queries, page: queries.page + 1})
+    }
+
     setQueries({...queries, [e.target.name] : e.target.value})
   }
 
@@ -111,7 +220,7 @@ function Claims() {
     )
   }
   return (
-    <section>
+    <section className='flex row'>
       <NavBar/>
       <div className='side-bar flex column' onChange={handleChange}>
         <input type='text' name='policyName' id='policyName' value={queries.policyName}></input>
@@ -124,12 +233,16 @@ function Claims() {
         <h1>Sort By</h1>
         <CheckButton id='sort' names={['policyName', 'policyType', 'status']} onClick={handleChange}/>
         <h1>Page</h1>
+        <div className='arrow-container flex row'>
+          <button name='left' id='left'><img src={leftArrow} alt='leftArrow'/></button>
+          <button name='right' id='right'><img src={rightArrow} alt='rightArrow'/></button>
+        </div>
       </div>
-      <div className='tile-container'>
+      <div className='tile-container flex row'>
         {
           claims.length > 0 ? claims.map((claim) => {
             return (
-              <div className='tile'>
+              <div className='tile flex column'>
                 <h3><span className='bold'>Policy Name: </span>{claim.policyName}</h3>
                 <h3><span className='bold'>Policy Type: </span>{claim.policyType}</h3>
                 <h3><span className='bold'>Claim Amount: </span>${claim.claimAmount}</h3>

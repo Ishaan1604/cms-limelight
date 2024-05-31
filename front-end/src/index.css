@@ -6,7 +6,7 @@
 }
 
 :root {
-  --text-white: rgba(255, 255, 255, 0.8);
+  --text-white: rgba(255, 255, 255, 0.9);
   --main-background: rgb(244, 254, 255);
   --modal-background: rgba(0, 0, 0, 0.146);
   --brand-light-purple: rgba(137, 53, 216, 0.835);
@@ -133,6 +133,8 @@ body {
 
 .flex {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1%;
 }
 
 .column {
@@ -215,15 +217,22 @@ body {
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   align-items: center;
+  background-color: var(--text-white);
 }
 
-.side-bar > :nth-child(n) {
-  margin: 2% 5%;
+.side-bar > :nth-child(n + 2) {
+  margin: 1% 5%;
   width: 90%;
 }
 
 .side-bar > h1, .side-bar > h3 {
   color: var(--brand-light-purple);
+}
+
+.side-bar > input {
+  background-color: var(--modal-background);
+  width: 90%;
+  margin-top: 5%;
 }
 
 .button-row {
@@ -240,4 +249,43 @@ body {
 .radio-btn, .check-btn {
   width: 5%;
   margin-right: 2.5%;
+}
+
+.arrow-container {
+  justify-content: space-evenly;
+}
+
+.arrow-container > button {
+  width: 10%;
+  background-color: transparent;
+  border: none;
+}
+
+.tile-container {
+  width: 75%;
+  margin-top: 1%;
+}
+
+.tile {
+  width: 45%;
+  background: linear-gradient(var(--brand-light-purple), var(--brand-dark-purple));
+  border-radius: 1rem;
+  justify-content: center;
+  color: var(--text-white);
+}
+
+.tile > :nth-child(n) {
+  margin: 0.5% 3%;
+  text-transform: capitalize;
+  font-weight: normal;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+nav {
+  width: 100%;
+  height: 10vh;
+  background: linear-gradient(var(--brand-light-purple), var(--brand-dark-purple));
 }
