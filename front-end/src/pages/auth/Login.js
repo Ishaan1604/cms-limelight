@@ -69,7 +69,7 @@ function Login() {
         <form onSubmit={handleSubmit} onChange={handleChange} className='form'>
           <FormRow type='email' name='email' id='email' value={loginInfo.email}/>
           <FormRow type='password' name='password' id='password' value={loginInfo.password}/>
-          <button type='submit' className='submit-btn'>Login</button>
+          <button type='submit' className='btn submit-btn'>Login</button>
         </form>
         <p style={{textAlign: 'center', marginBottom: '2%'}}>
           Do not have an account?

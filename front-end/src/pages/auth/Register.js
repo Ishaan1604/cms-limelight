@@ -82,7 +82,7 @@ function Register() {
           <FormRow type='email' name='email' id='email' value={loginInfo.email}/>
           <FormRow type='password' name='password' id='password' value={loginInfo.password}/>
           <FormRow type='file' name='image' id='image' />
-          <button type='submit' className='submit-btn'>Register</button>
+          <button type='submit' className='btn submit-btn'>Register</button>
         </form>
         <p style={{textAlign: 'center', marginBottom: '2%'}}>
           Already have an account?

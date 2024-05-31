@@ -64,7 +64,7 @@ function ResetPassword() {
         <form onSubmit={handleSubmit} onChange={handleChange} className='form'>
           <FormRow type='email' name='email' id='email' value={loginInfo.email}/>
           <FormRow type='password' name='password' id='password' value={loginInfo.password}/>
-          <button type='submit' className='submit-btn'>Reset Password</button>
+          <button type='submit' className='btn submit-btn'>Reset Password</button>
         </form>
       </div>
     </section> 

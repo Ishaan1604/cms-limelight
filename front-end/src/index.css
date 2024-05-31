@@ -187,13 +187,16 @@ body {
 }
 
 .submit-btn {
+  margin: 1% 0;
+  font-size: medium;
+}
+
+.btn, .submit-btn {
+  background: linear-gradient(180deg, var(--brand-light-purple), var(--brand-dark-purple));
+  color: var(--text-white);
   border-radius: 1rem;
   padding: 1% 0;
   border: none;
-  background: linear-gradient(180deg, var(--brand-light-purple), var(--brand-dark-purple));
-  color: var(--text-white);
-  margin: 1% 0;
-  font-size: medium;
 }
 
 .error-div {
@@ -204,4 +207,37 @@ body {
 .success-div {
   background-color: rgba(46, 246, 46, 0.905);
   margin: auto;
+}
+
+.side-bar {
+  width: 20%;
+  height: 89vh;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  align-items: center;
+}
+
+.side-bar > :nth-child(n) {
+  margin: 2% 5%;
+  width: 90%;
+}
+
+.side-bar > h1, .side-bar > h3 {
+  color: var(--brand-light-purple);
+}
+
+.button-row {
+  width: 100%;
+}
+
+.btn-label {
+  width: 90%;
+  margin-left: 2.5%;
+  text-transform: capitalize;
+  color: var(--brand-light-purple);
+}
+
+.radio-btn, .check-btn {
+  width: 5%;
+  margin-right: 2.5%;
 }

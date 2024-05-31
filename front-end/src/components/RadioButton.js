@@ -1,6 +1,6 @@
 import React from 'react'
 
-function RadioButton({names, id, type}) {
+function RadioButton({names, id}) {
   return (
     <div className='button-container'>
       {
