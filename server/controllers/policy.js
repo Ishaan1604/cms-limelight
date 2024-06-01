@@ -14,7 +14,7 @@ const getAllPolicy = async(req, res) => {
     }
 
     if (policyType) {
-        filterObj.policyType = {$in : policyType.split(',')};
+        filterObj.policyType = {$in : policyType.split(' ')};
     }
 
     filterObj.active = active || true;

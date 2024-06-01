@@ -14,116 +14,117 @@ function Policies() {
 
   const fetchData = async() => {
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/policies?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
+      console.log(queries)
+      const {data} = await axios.get(`http://localhost:3000/api/v1/cms/policies?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
 
-      const data = {
-        policies: [
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          },
-        ]
-      }
+      // const data = {
+      //   policies: [
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     },
+      //   ]
+      // }
 
       setPolicies(data.policies)
       
@@ -228,7 +229,7 @@ function Policies() {
           <button name='right' id='right'><img src={rightArrow} alt='rightArrow'/></button>
         </div>
       </div>
-      <div className='tile-container flex row'>
+      <div className='tile-container flex column'>
         {
           policies.length > 0 ? policies.map((policy) => {
             return (
@@ -241,7 +242,7 @@ function Policies() {
                 <h3><span className='bold'>Status: </span>{policy.active === 'false' ? 'Expired' : 'Active'}</h3>
               </Link>
             )
-          }) : <div className='tile'>
+          }) : <div className='tile flex center'>
             <h3>No Policies Found</h3>
           </div>
         }

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 function MakeClaim({policyId, onClick}) {
 
   const [policy, setPolicy] = useState({})
-  const [data, setData] = useState({})
+  const [claim, setClaim] = useState({})
   const [document, setDocument] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState({err: false, msg: null});
@@ -14,26 +14,27 @@ function MakeClaim({policyId, onClick}) {
   
   const fetchData = async() => {
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies/${policyId}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
-
-      const data = {
-        myPolicy: {
-          _id: 1,
-          policyId: 1,
-          userId: 1,
-          policyName: 'Example 1',
-          policyType: 'Health',
-          amountRemaining: 10000,
-          expired: 'false',
-          vailidity: '26-06-06T1234',
+      const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies/${policyId.policyId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
         }
-      }
+      })
+
+      // const data = {
+      //   myPolicy: {
+      //     _id: 1,
+      //     policyId: 1,
+      //     userId: 1,
+      //     policyName: 'Example 1',
+      //     policyType: 'Health',
+      //     amountRemaining: 10000,
+      //     expired: 'false',
+      //     vailidity: '26-06-06T1234',
+      //   }
+      // }
 
       setPolicy(data.myPolicy)
+      setClaim({policyId: data.myPolicy.policyId, userId: data.myPolicy.userId, policyName: data.myPolicy.policyName, policyType: data.myPolicy.policyType})
       
     } catch (error) {
       setError({err: true, msg: error.message})
@@ -47,7 +48,7 @@ function MakeClaim({policyId, onClick}) {
       setDocument(e.target.files[0])
       return;
     }
-    setData({...data, [e.target.name] : e.target.value})
+    setClaim({...claim, [e.target.name] : e.target.value})
   }
 
   const handleSubmit = async(e) => {
@@ -57,17 +58,18 @@ function MakeClaim({policyId, onClick}) {
 
       const formData = new FormData();
       formData.append('file', document)
-      Object.keys(data).map((key) => {
-        formData.append(key, data[key])
+      Object.keys(claim).map((key) => {
+        formData.append(key, claim[key])
       })
 
-      // const {data} = await axios.post(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies/${policyId}`, formData, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
+      const {data} = await axios.post(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies/${policyId.policyId}`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
       navigate(`/${localStorage.name}/claims`)
     } catch (error) {
+      console.log(error)
       setError({err: true, msg: error.message})
     } finally {
       setIsLoading(false)

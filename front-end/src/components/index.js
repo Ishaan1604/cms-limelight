@@ -4,6 +4,7 @@ import ProtectedRouteAdmin from './ProtectedRouteAdmin'
 import Error from "./Error";
 import RadioButton from "./RadioButton";
 import CheckButton from "./CheckButton";
+import Updates from "./Updates";
 
 
 export {
@@ -12,5 +13,6 @@ export {
     ProtectedRouteAdmin,
     Error,
     RadioButton,
-    CheckButton
+    CheckButton,
+    Updates
 }

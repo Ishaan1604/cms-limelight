@@ -12,25 +12,25 @@ function Policy() {
 
   const fetchData = async() => {
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/policies/${policy_id}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
+      const {data} = await axios.get(`http://localhost:3000/api/v1/cms/policies/${policy_id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
 
-      const data = {
-        policy: 
-          {
-            _id: 1,
-            name: 'Example 1',
-            policyType: 'Health',
-            description: 'blah blah blah',
-            cost: '$200/week for 2 years',
-            claimAmount: 10000,
-            active: 'true',
-            vailidity: '2 years,0 months',
-          }
-      }
+      // const data = {
+      //   policy: 
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'blah blah blah',
+      //       cost: '$200/week for 2 years',
+      //       claimAmount: 10000,
+      //       active: 'true',
+      //       vailidity: '2 years,0 months',
+      //     }
+      // }
 
       setPolicy(data.policy)
       
@@ -46,11 +46,11 @@ function Policy() {
     try {
       setIsLoading(true)
 
-      // const {data} = await axios.post(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/${policyId}`, policy, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
+      const {data} = await axios.post(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/${policy_id}`, policy, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
       navigate(`/${localStorage.name}/myPolicies`)
     } catch (error) {
       setError({err: true, msg: error.message})

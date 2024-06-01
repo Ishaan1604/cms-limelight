@@ -53,7 +53,7 @@ const getAllClaims = async(req, res) => {
     }
 
     if (policyType) {
-        filterObj.policyType = policyType;
+        filterObj.policyType = filterObj.policyType = {$in : policyType.split(' ')};
     }
 
     if (policy_id) {

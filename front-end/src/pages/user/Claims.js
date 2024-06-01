@@ -14,126 +14,126 @@ function Claims() {
   const fetchData = async() => {
     console.log(queries)
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myClaims?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
+      const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myClaims?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
 
-      const data = {
-        claims: [
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          }
-        ]
-      }
+      // const data = {
+      //   claims: [
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     }
+      //   ]
+      // }
 
       setClaims(data.claims)
       
@@ -249,7 +249,7 @@ function Claims() {
                 <h3><span className='bold'>Status: </span>{claim.status}</h3>
               </div>
             )
-          }) : <div className='tile'>
+          }) : <div className='tile flex center'>
             <h3>No Policies Found</h3>
           </div>
         }

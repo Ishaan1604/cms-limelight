@@ -16,116 +16,116 @@ function UserPolicies() {
 
   const fetchData = async() => {
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
+      const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
 
-      const data = {
-        myPolicies: [
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-          {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            amountRemaining: 10000,
-            expired: 'false',
-            vailidity: '26-06-06T1234',
-          },
-        ]
-      }
+      // const data = {
+      //   myPolicies: [
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //     {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       amountRemaining: 10000,
+      //       expired: 'false',
+      //       vailidity: '26-06-06T1234',
+      //     },
+      //   ]
+      // }
 
       setPolicies(data.myPolicies)
       
@@ -242,7 +242,7 @@ function UserPolicies() {
         <div className='tile-container flex row'>
           {
             policies.length > 0 ? policies.map((policy) => {
-              let [year, month, day] = policy.vailidity.split('-')
+              let [year, month, day] = policy.validity.split('-')
               day = day.slice(0, 2)
               const date = day + '/' + month + '/' + year
               return (
@@ -259,7 +259,7 @@ function UserPolicies() {
                   }}>Make A Claim</button>
                 </div>
               )
-            }) : <div className='tile'>
+            }) : <div className='tile flex center'>
               <h3>No Policies Found</h3>
             </div>
           }

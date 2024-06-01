@@ -5,6 +5,7 @@ const { NotFoundError, BadRequestError, UnsupportedMediaError } = require('../er
 const Claim = require('../models/Claim')
 const fs = require('fs/promises');
 const Person = require('../models/Person');
+const jwt = require('jsonwebtoken');
 
 const getAllUserPolicy = async(req, res) => {
     const {_id: userId} = req.user
@@ -17,7 +18,7 @@ const getAllUserPolicy = async(req, res) => {
     }
 
     if (policyType) {
-        filterObj.policyType = {$in : policyType.split(',')};
+        filterObj.policyType = {$in : policyType.split(' ')};
     }
 
     if (policyId) {
@@ -45,6 +46,7 @@ const getAllUserPolicy = async(req, res) => {
 const getUserPolicy = async(req, res) => {
     const {_id: userId} = req.user
     const {policy_id: policyId} = req.params;
+    // console.log(req.params)
     // const {policyId, userId} = req.filterObj;
 
     const myPolicy = await UserPolicy.findOne({_id: policyId, userId});
@@ -66,7 +68,7 @@ const getAllUserClaims = async(req, res) => {
     }
 
     if (policyType) {
-        filterObj.policyType = {$in : policyType.split(',')};
+        filterObj.policyType = {$in : policyType.split(' ')};
     }
 
     if (policyId) {
@@ -121,7 +123,7 @@ const makeClaim = async(req, res) => {
 
 
     if (userPolicy.validity.getTime() < Date.now() + 600000) {
-        throw new BadRequestError(`Policy with id: ${policy_id} has expired or will expire in 10mins`)
+        throw new BadRequestError(`Policy with id: ${policyId} has expired or will expire in 10mins`)
     }
 
     const {claimAmount} = req.body
@@ -137,11 +139,12 @@ const makeClaim = async(req, res) => {
 const updateUser = async(req, res) => {
     const {_id: userId} = req.user;
 
-    const user = Person.findOneAndUpdate({_id: userId}, {...req.body, personType: 'user', password: req.user.password}, {new: true, runValidators: true})
+    const user = await Person.findOneAndUpdate({_id: userId}, {...req.body, personType: 'user', password: req.user.password}, {new: true, runValidators: true})
     if (!user) {
         throw new NotFoundError(`No user with id: ${userId} found`)
     }
-    res.status(StatusCodes.OK).json({user})
+    const token = jwt.sign({name: user.name, email: user.email, type: user.personType}, process.env.JWT_SECRET, {'expiresIn': '30d'})
+    res.status(StatusCodes.OK).json({user, token})
 }
 
 const deleteUser = async(req, res) => {

@@ -1,11 +1,84 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from './NavBar'
 import { useNavigate } from 'react-router-dom'
-import { FormRow } from '../../components';
+import { FormRow, Updates } from '../../components';
+import axios from 'axios';
 
 function Home() {
   const navigate = useNavigate();
-  const [values, setValues] = useState({})
+  const [values, setValues] = useState({name: localStorage.name, email: localStorage.email})
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({err: false, msg: null});
+  const [updates, setUpdates] = useState({policies: [], myPolicies: [], claims: []})
+
+  const fetchData = async() => {
+    try {
+      setIsLoading(true)
+
+      const {data: policies} = await axios.get(`http://localhost:3000/api/v1/cms/policies?limit=3&sort=-updatedAt`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
+
+      const {data: myPolicies} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies?limit=3&sort=-updatedAt`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
+
+      const {data: claims} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myClaims?limit=3&sort=-updatedAt`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
+
+      setUpdates({policies, myPolicies, claims})
+    } catch (error) {
+      setError({err: true, msg: error.message})
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const updateUser = async(e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true)
+
+      const {data} = await axios.patch(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/updateUser`, values, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
+      localStorage.name = data.user.name;
+      localStorage.email = data.user.email;
+      localStorage.token = data.token
+      setValues({name: data.user.name, email: data.user.email})
+    } catch (error) {
+      setError({err: true, msg: error.message})
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const deleteUser = async(e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true)
+
+      await axios.delete(`http://localhost:3000/api/v1/cms/user/${localStorage.name}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
+      navigate('/auth/login')
+    } catch (error) {
+      setError({err: true, msg: error.message})
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   useEffect(() => {
     if (!localStorage.token) {
@@ -13,7 +86,26 @@ function Home() {
     }
 
     navigate(`/${localStorage.name}`)
+    fetchData();
   }, [])
+
+  if (isLoading) {
+    return (
+      <div className='loading'>
+        <div></div>
+        <div></div>
+        <div></div>
+        <p></p>
+      </div>
+    )
+  }
+  if (error.err) {
+    return (
+      <div className='error-div'>
+        <p>{error.msg}</p>
+      </div>
+    )
+  }
 
   return (
     <div className='flex row'>
@@ -23,33 +115,38 @@ function Home() {
         <h1 style={{textAlign: 'center'}}>{localStorage.name}</h1>
       </div>
       <div className='tile-container flex row'>
-        <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}}>
+        <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}} onChange={(e) => {
+          setValues({...values, [e.target.name] : e.target.value})
+        }}>
           <h1>User Info</h1>
           <FormRow type='text' name='name' id='id' value={values.name} />
           <FormRow type='email' name='email' id='email' value={values.email} />
-          <button>Update User</button>
-          <button>Delete User</button>
+          <button onClick={updateUser}>Update User</button>
+          <button onClick={deleteUser}>Delete User</button>
         </div>
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}}>
           <h1>Policy Updates</h1>
-          <FormRow type='text' name='name' id='id' value={values.name} />
-          <FormRow type='email' name='email' id='email' value={values.email} />
-          <button>Update User</button>
-          <button>Delete User</button>
+          {
+            updates.policies.length > 0 ? updates.policies.map((policy) => {
+              return <Updates type='policy' content={policy} />
+            }) : <h1>No Policy Updates</h1>
+          }
         </div>
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}}>
           <h1>My Policy Updates</h1>
-          <FormRow type='text' name='name' id='id' value={values.name} />
-          <FormRow type='email' name='email' id='email' value={values.email} />
-          <button>Update User</button>
-          <button>Delete User</button>
+          {
+            updates.myPolicies.length > 0 ? updates.myPolicies.map((policy) => {
+              return <Updates type='user-policy' content={policy} />
+            }) : <h1>No User-Policy Updates</h1>
+          }
         </div>
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}}>
           <h1>My Claims Update</h1>
-          <FormRow type='text' name='name' id='id' value={values.name} />
-          <FormRow type='email' name='email' id='email' value={values.email} />
-          <button>Update User</button>
-          <button>Delete User</button>
+          {
+            updates.claims.length > 0 ? updates.claims.map((claim) => {
+              return <Updates type='claim' content={claim} />
+            }) : <h1>No Claim Updates</h1>
+          }
         </div>
       </div>
     </div>
