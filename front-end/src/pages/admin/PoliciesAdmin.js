@@ -243,7 +243,7 @@ function PoliciesAdmin() {
           <h3>Active</h3>
           <CheckButton id='active' names={['true', 'false']} onClick={handleChange}/>
           <h1>Sort By</h1>
-          <CheckButton id='sort' names={['policyName', 'policyType', 'active', 'validity']} onClick={handleChange}/>
+          <CheckButton id='sort' names={['name', 'policyType', 'active', 'validity', 'claims']} onClick={handleChange}/>
           <h1>Page</h1>
           <div className='arrow-container flex row'>
             <button name='left' id='left'><img src={leftArrow} alt='leftArrow'/></button>

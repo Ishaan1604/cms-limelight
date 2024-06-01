@@ -29,6 +29,10 @@ const policySchema = mongoose.Schema({
     active: {
         type: Boolean,
         default: true,
+    },
+    claims: {
+        type: Number,
+        default: 0,
     }
 }, {
     timestamps: true,

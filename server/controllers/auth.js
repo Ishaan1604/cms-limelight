@@ -10,11 +10,7 @@ const register = async(req, res) => {
 
     const role = people.length > 0 ? 'user' : 'admin'
 
-    if (!req.files.file.mimetype.startsWith('image')) {
-        throw new UnsupportedMediaError(`${req.files.file.mimetype.split('/')[1]}. Only image formats supported`)
-    }
-
-    const person = await Person.create({...req.body, image: req.files.file.data, personType: role})
+    const person = await Person.create({...req.body, personType: role})
     const token = jwt.sign({name: person.name, email: person.email, type: person.personType}, process.env.JWT_SECRET, {'expiresIn': '30d'})
     res.status(StatusCodes.CREATED).json({person, token})
 }

@@ -23,8 +23,9 @@ const personSchema = mongoose.Schema({
         required: [true, 'Please provide a user type'],
         enum: ['admin', 'user'],
     },
-    image: {
-        type: Buffer
+    claims: {
+        type: Number,
+        default: 0,
     }
 })
 

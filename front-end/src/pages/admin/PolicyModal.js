@@ -90,7 +90,7 @@ function PolicyModal({policyId, onClick}) {
       <div className='form-container flex center'>
         <form onChange={handleChange} className='form flex row' style={{justifyContent: 'space-between'}} onSubmit={handleSubmit} onClick={onClick}>
           <FormRow type='text' name='_id' id='_id' value={policy._id} readOnly='true'/>
-          <FormRow type='text' name='policyName' id='policyName' value={policy.name} />
+          <FormRow type='text' name='name' id='name' value={policy.name} />
           <FormRow type='text' name='policyType' id='policyType' value={policy.policyType} />
           <FormRow type='text' name='description' id='description' value={policy.description} />
           <FormRow type='text' name='claimAmount' id='claimAmount' value={policy.claimAmount} />

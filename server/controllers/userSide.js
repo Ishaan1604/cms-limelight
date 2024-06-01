@@ -133,6 +133,9 @@ const makeClaim = async(req, res) => {
     }
 
     const claim = await Claim.create({userId, policyId, ...req.body, document: req.files.file.data})
+    const policy = await Policy.findOne({_id: policyId})
+    await Policy.findOneAndUpdate({_id: policyId}, {...policy, claims: policy.claims + 1}, {new: true, runValidators: true})
+    const user = await Person.findOneAndUpdate({_id: userId}, {...req.user, claims: req.user.claims + 1}, {new: true, runValidators: true})
     res.status(StatusCodes.CREATED).json({claim})
 }
 
