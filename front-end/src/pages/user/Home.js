@@ -83,6 +83,7 @@ function Home() {
   useEffect(() => {
     if (!localStorage.token) {
       navigate('/auth/login')
+      return;
     }
 
     navigate(`/${localStorage.name}`)
@@ -114,7 +115,7 @@ function Home() {
         <h1>Welcome!</h1>
         <h1 style={{textAlign: 'center'}}>{localStorage.name}</h1>
       </div>
-      <div className='tile-container flex row'>
+      <div className='home-container grid'>
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}} onChange={(e) => {
           setValues({...values, [e.target.name] : e.target.value})
         }}>

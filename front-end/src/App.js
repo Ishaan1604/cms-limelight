@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import {Home, Claims, Policies, Policy, UserPolicies} from './pages/user'
 import {ProtectedRoute, ProtectedRouteAdmin, Error} from './components'
 import {Login, Register, ResetPassword} from './pages/auth'
-import {PoliciesAdmin, ClaimsAdmin, Users} from './pages/admin'
+import {PoliciesAdmin, ClaimsAdmin, Users, HomeAdmin} from './pages/admin'
 
 function App() {
   return (
@@ -23,7 +23,8 @@ function App() {
           <Route path='resetPassword' element={<ResetPassword/>} />
         </Route>
         <Route path='/admin'>
-          <Route path='' element={<ProtectedRouteAdmin element={<PoliciesAdmin />}/>}/>
+          <Route path='' element={<ProtectedRouteAdmin element={<HomeAdmin />}/>}/>
+          <Route path='policies' element={<ProtectedRouteAdmin element={<PoliciesAdmin />}/>}/>
           <Route path='users' element={<ProtectedRouteAdmin element={<Users />}/>}/>
           <Route path='claims' element={<ProtectedRouteAdmin element={<ClaimsAdmin />}/>}/>
         </Route>

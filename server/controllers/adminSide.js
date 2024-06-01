@@ -4,6 +4,7 @@ const {NotFoundError, BadRequestError} = require('../errors')
 const Claim = require('../models/Claim')
 const sgMail = require('@sendgrid/mail');
 const Policy = require('../models/Policy');
+const UserPolicy = require('../models/UserPolicy')
 require('dotenv').config();
 
 const getAllUsers = async(req, res) => {
@@ -43,9 +44,9 @@ const getUser = async(req, res) => {
 }
 
 const getAllClaims = async(req, res) => {
-    const {user_id, policy_id} = req.params;
+    // const {user_id, policy_id} = req.params;
 
-    const {policyName, policyType, status, sort, limit, page} = req.query;
+    const {policyName, policyType, status, sort, limit, page, policyId, userId} = req.query;
     let filterObj = {};
 
     if (policyName) {
@@ -56,12 +57,13 @@ const getAllClaims = async(req, res) => {
         filterObj.policyType = filterObj.policyType = {$in : policyType.split(' ')};
     }
 
-    if (policy_id) {
-        filterObj.policyId = policy_id
+    if (policyId) {
+        const userPolicies = await UserPolicy.find({policyId})
+        filterObj.policyId = {$in : userPolicies.map((policy) => policy._id)}
     }
 
-    if(user_id) {
-        filterObj.userId = user_id
+    if(userId) {
+        filterObj.userId = userId
     }
 
     filterObj.status = status || 'pending'

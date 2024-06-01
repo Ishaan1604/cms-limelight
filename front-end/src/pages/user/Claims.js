@@ -238,7 +238,7 @@ function Claims() {
           <button name='right' id='right'><img src={rightArrow} alt='rightArrow'/></button>
         </div>
       </div>
-      <div className='tile-container flex row'>
+      <div className='tile-container grid'>
         {
           claims.length > 0 ? claims.map((claim) => {
             return (
@@ -250,7 +250,7 @@ function Claims() {
               </div>
             )
           }) : <div className='tile flex center'>
-            <h3>No Policies Found</h3>
+            <h3>No Claims Found</h3>
           </div>
         }
       </div>

@@ -7,18 +7,18 @@ function NavBar() {
     <nav className='flex row'>
       <ul style={{width: '20%', fontSize: 'larger'}} className='flex row center'>
         <li>
-          <a className='flex row center' href={`/${localStorage.name}`}>CMS</a>
+          <a className='flex row center' href={`/admin`}>CMS</a>
         </li>
       </ul>
       <ul className='flex row' style={{width: '60%', justifyContent: 'space-evenly'}}>
         <li>
-          <a className='flex row center' href={`/${localStorage.name}/policies`}>Policies</a>
+          <a className='flex row center' href={`/admin/policies`}>Policies</a>
         </li>
         <li>
-          <a className='flex row center' href={`/${localStorage.name}/myPolicies`}>My Policies</a>
+          <a className='flex row center' href={`/admin/users`}>User</a>
         </li>
         <li>
-          <a className='flex row center' href={`/${localStorage.name}/claims`}>Claims</a>
+          <a className='flex row center' href={`/admin/claims`}>Claims</a>
         </li>
         <li>
           <a className='flex row center' onClick={() => {

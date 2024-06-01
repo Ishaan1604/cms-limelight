@@ -239,7 +239,7 @@ function UserPolicies() {
             <button name='right' id='right'><img src={rightArrow} alt='rightArrow'/></button>
           </div>
         </div>
-        <div className='tile-container flex row'>
+        <div className='tile-container grid'>
           {
             policies.length > 0 ? policies.map((policy) => {
               let [year, month, day] = policy.validity.split('-')

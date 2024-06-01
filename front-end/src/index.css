@@ -159,6 +159,11 @@ body {
   align-items: center;
 }
 
+.grid {
+  display: grid;
+  gap: 1%;
+}
+
 .form-container,.error-div, .success-div {
   width: 40%;
   border-radius: 1rem;
@@ -278,23 +283,24 @@ body {
 }
 
 .tile-container {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.tile-container, .home-container {
   width: 79%;
   margin-top: 1%;
 }
 
+.home-container {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
 .tile, .home-tile {
-  width: 49%;
   background: linear-gradient(var(--brand-light-purple), var(--brand-dark-purple));
   border-radius: 1rem;
   color: var(--text-white);
-}
-
-.tile {
-  height: 19%;
-}
-
-.home-tile {
-  height: 49%;
 }
 
 .home-tile > h1 {
@@ -351,7 +357,7 @@ nav > ul {
 nav > ul > li {
   list-style: none;
   height: inherit;
-  width: 30%;
+  width: 20%;
 }
 
 nav > ul > li > a {
