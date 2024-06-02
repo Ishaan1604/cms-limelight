@@ -5,7 +5,7 @@ const { NotFoundError } = require('../errors');
 const getAllPolicy = async(req, res) => {
 
     const {policyName: name, policyType, sort, limit, page, active} = req.query;
-    const pageSort = sort || 'name'
+    const pageSort = sort?.trim() || 'name'
     // const {policyName: name, policyType} = req.filterObj
     const filterObj = {};
 

@@ -5,7 +5,8 @@ const AppContext = React.createContext();
 
 const AppProvider = ({children}) => {
     const [content, setContent] = useState(null);
-    return (<AppContext.Provider value={{content, setContent}}>
+    const [error, setError] = useState({err: false, msg: null});
+    return (<AppContext.Provider value={{content, setContent, error, setError}}>
         {children}
     </AppContext.Provider>)
 }

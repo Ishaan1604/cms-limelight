@@ -5,6 +5,7 @@ import Error from "./Error";
 import RadioButton from "./RadioButton";
 import CheckButton from "./CheckButton";
 import Updates from "./Updates";
+import SelectRow from "./SelectRow";
 
 
 export {
@@ -14,5 +15,6 @@ export {
     Error,
     RadioButton,
     CheckButton,
-    Updates
+    Updates,
+    SelectRow,
 }

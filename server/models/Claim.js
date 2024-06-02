@@ -23,7 +23,6 @@ const claimSchema = mongoose.Schema({
     },
     description: {
         type: String,
-        maxlength: 200,
     },
     claimAmount: {
         type: Number,

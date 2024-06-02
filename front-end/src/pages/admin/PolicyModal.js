@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import { FormRow } from '../../components'
+import { FormRow, SelectRow} from '../../components'
 import { useNavigate } from 'react-router-dom'
 
 function PolicyModal({policyId, onClick}) {
@@ -11,29 +11,31 @@ function PolicyModal({policyId, onClick}) {
   const navigate = useNavigate();
   
   const fetchData = async() => {
+    console.log(policyId)
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/policies/${policyId.policyId}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
-
-      const data = {
-        policy: {
-          _id: 1,
-          name: 'Example 1',
-          policyType: 'Health',
-          description: 'blah blah blah',
-          cost: '$200/week for 2 years',
-          claimAmount: 10000,
-          active: 'true',
-          validity: '2 years,0 months',
+      const {data} = await axios.get(`http://localhost:3000/api/v1/cms/policies/${policyId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
         }
-      }
+      })
+
+      // const data = {
+      //   policy: {
+      //     _id: 1,
+      //     name: 'Example 1',
+      //     policyType: 'Health',
+      //     description: 'blah blah blah',
+      //     cost: '$200/week for 2 years',
+      //     claimAmount: 10000,
+      //     active: 'true',
+      //     validity: '2 years,0 months',
+      //   }
+      // }
 
       setPolicy(data.policy)
       
     } catch (error) {
+      console.log(error)
       setError({err: true, msg: error.message})
     } finally {
       setIsLoading(false)
@@ -91,7 +93,7 @@ function PolicyModal({policyId, onClick}) {
         <form onChange={handleChange} className='form flex row' style={{justifyContent: 'space-between'}} onSubmit={handleSubmit} onClick={onClick}>
           <FormRow type='text' name='_id' id='_id' value={policy._id} readOnly='true'/>
           <FormRow type='text' name='name' id='name' value={policy.name} />
-          <FormRow type='text' name='policyType' id='policyType' value={policy.policyType} />
+          <SelectRow name='policyType' id='policyType' names={['Health', 'Life', 'Auto', 'Travel', 'Property', 'Business', 'Renters', 'Homeowners', 'Disability', 'Liability', 'Pet', 'Critical Illness']} value={policy.policyType}/>
           <FormRow type='text' name='description' id='description' value={policy.description} />
           <FormRow type='text' name='claimAmount' id='claimAmount' value={policy.claimAmount} />
           <FormRow type='text' name='cost' id='cost' value={policy.cost} />

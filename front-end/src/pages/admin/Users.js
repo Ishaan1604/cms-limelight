@@ -14,96 +14,96 @@ function Users() {
 
   const fetchData = async() => {
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/users?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
+      const {data} = await axios.get(`http://localhost:3000/api/v1/cms/admin/users?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
 
-      const data = {
-        users: [
-          {
-            _id: 1,
-            name: 'Example 1',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 5,
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 5,
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 5,
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 5,
-          },
-          {
-            _id: 1,
-            name: 'Example 1',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 5,
-          },
-          {
-            _id: 2,
-            name: 'Example 2',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 10,
-          },
-          {
-            _id: 2,
-            name: 'Example 2',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 10,
-          },
-          {
-            _id: 2,
-            name: 'Example 2',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 10,
-          },
-          {
-            _id: 2,
-            name: 'Example 2',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 10,
-          },
-          {
-            _id: 2,
-            name: 'Example 2',
-            email: 'Health',
-            password: 'blah blah blah',
-            personType: 'user',
-            claims: 10,
-          },
-        ]
-      }
+      // const data = {
+      //   users: [
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 5,
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 5,
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 5,
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 5,
+      //     },
+      //     {
+      //       _id: 1,
+      //       name: 'Example 1',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 5,
+      //     },
+      //     {
+      //       _id: 2,
+      //       name: 'Example 2',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 10,
+      //     },
+      //     {
+      //       _id: 2,
+      //       name: 'Example 2',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 10,
+      //     },
+      //     {
+      //       _id: 2,
+      //       name: 'Example 2',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 10,
+      //     },
+      //     {
+      //       _id: 2,
+      //       name: 'Example 2',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 10,
+      //     },
+      //     {
+      //       _id: 2,
+      //       name: 'Example 2',
+      //       email: 'Health',
+      //       password: 'blah blah blah',
+      //       personType: 'user',
+      //       claims: 10,
+      //     },
+      //   ]
+      // }
 
       setUsers(data.users)
       

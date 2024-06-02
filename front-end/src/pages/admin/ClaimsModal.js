@@ -12,25 +12,25 @@ function ClaimsModal({claimId, onClick}) {
   
   const fetchData = async() => {
     try {
-      // const {data} = await axios.get(`http://localhost:3000/api/v1/cms/admin/claims/${claimId.claimId}`, {
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.token}`
-      //   }
-      // })
+      const {data} = await axios.get(`http://localhost:3000/api/v1/cms/admin/claims/${claimId.claimId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`
+        }
+      })
 
-      const data = {
-        claim: {
-            _id: 1,
-            policyId: 1,
-            userId: 1,
-            policyName: 'Example 1',
-            policyType: 'Health',
-            description: 'Blah blah blah',
-            claimAmount: 10000,
-            status: 'pending',
-            document: null,
-          }
-      }
+      // const data = {
+      //   claim: {
+      //       _id: 1,
+      //       policyId: 1,
+      //       userId: 1,
+      //       policyName: 'Example 1',
+      //       policyType: 'Health',
+      //       description: 'Blah blah blah',
+      //       claimAmount: 10000,
+      //       status: 'pending',
+      //       document: null,
+      //     }
+      // }
 
       setClaim(data.claim)
       
