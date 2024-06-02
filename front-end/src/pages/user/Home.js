@@ -35,7 +35,7 @@ function Home() {
 
       setUpdates({policies, myPolicies, claims})
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }
@@ -56,7 +56,7 @@ function Home() {
       localStorage.token = data.token
       setValues({name: data.user.name, email: data.user.email})
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }
@@ -74,7 +74,7 @@ function Home() {
       })
       navigate('/auth/login')
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }

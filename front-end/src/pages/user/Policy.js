@@ -53,7 +53,7 @@ function Policy() {
       })
       navigate(`/${localStorage.name}/myPolicies`)
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }

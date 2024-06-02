@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { FormRow } from '../../components'
 import { useNavigate } from 'react-router-dom'
+import { useGlobalContext } from '../../context'
 
 function MakeClaim({policyId, onClick}) {
 
@@ -9,7 +10,7 @@ function MakeClaim({policyId, onClick}) {
   const [claim, setClaim] = useState({})
   const [document, setDocument] = useState(null)
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState({err: false, msg: null});
+  const {setError} = useGlobalContext();
   const navigate = useNavigate();
   
   const fetchData = async() => {
@@ -37,7 +38,7 @@ function MakeClaim({policyId, onClick}) {
       setClaim({policyId: data.myPolicy.policyId, userId: data.myPolicy.userId, policyName: data.myPolicy.policyName, policyType: data.myPolicy.policyType})
       
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }
@@ -70,7 +71,7 @@ function MakeClaim({policyId, onClick}) {
       navigate(`/${localStorage.name}/claims`)
     } catch (error) {
       console.log(error)
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }
@@ -87,13 +88,6 @@ function MakeClaim({policyId, onClick}) {
         <div></div>
         <div></div>
         <p></p>
-      </div>
-    )
-  }
-  if (error.err) {
-    return (
-      <div className='error-div'>
-        <p>{error.msg}</p>
       </div>
     )
   }

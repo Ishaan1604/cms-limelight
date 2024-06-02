@@ -6,12 +6,13 @@ import leftArrow from '../../assets/leftArrow.svg'
 import rightArrow from '../../assets/rightArrow.svg'
 import { Link, useLocation} from 'react-router-dom';
 import ClaimsModal from './ClaimsModal';
+import { useGlobalContext } from '../../context';
 
 function ClaimsAdmin() {
   const location = useLocation();
   const [key, value] = location.search?.slice(1).split('=')
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({err: false, msg: null});
+  const {error, setError} = useGlobalContext();
   const [claims, setClaims] = useState([])
   const [queries, setQueries] = useState({page: 1, limit: 10, [key]: value})
   const [claimModal, setClaimModal] = useState(false)
@@ -144,7 +145,7 @@ function ClaimsAdmin() {
       setClaims(data.claims)
       
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }

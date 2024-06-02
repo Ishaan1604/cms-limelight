@@ -108,7 +108,7 @@ function Users() {
       setUsers(data.users)
       
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }

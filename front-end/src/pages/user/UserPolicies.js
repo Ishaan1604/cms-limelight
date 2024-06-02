@@ -5,10 +5,11 @@ import { CheckButton} from '../../components';
 import leftArrow from '../../assets/leftArrow.svg'
 import rightArrow from '../../assets/rightArrow.svg'
 import MakeClaim from './MakeClaim';
+import { useGlobalContext } from '../../context';
 
 function UserPolicies() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({err: false, msg: null});
+  const {error, setError} = useGlobalContext();
   const [policies, setPolicies] = useState([])
   const [queries, setQueries] = useState({page: 1, limit: 10})
   const [claimModal, setClaimModal] = useState(false)
@@ -130,7 +131,7 @@ function UserPolicies() {
       setPolicies(data.myPolicies)
       
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }

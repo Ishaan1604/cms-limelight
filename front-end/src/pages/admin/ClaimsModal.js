@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import { FormRow } from '../../components'
 import { useNavigate } from 'react-router-dom'
+import { useGlobalContext } from '../../context'
 
 function ClaimsModal({claimId, onClick}) {
 
   const [claim, setClaim] = useState({})
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState({err: false, msg: null});
+  const {setError} = useGlobalContext();
   const navigate = useNavigate();
   
   const fetchData = async() => {
@@ -35,7 +36,7 @@ function ClaimsModal({claimId, onClick}) {
       setClaim(data.claim)
       
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }
@@ -58,7 +59,7 @@ function ClaimsModal({claimId, onClick}) {
       navigate(`/admin/claims`)
     } catch (error) {
       console.log(error)
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }
@@ -75,13 +76,6 @@ function ClaimsModal({claimId, onClick}) {
         <div></div>
         <div></div>
         <p></p>
-      </div>
-    )
-  }
-  if (error.err) {
-    return (
-      <div className='error-div'>
-        <p>{error.msg}</p>
       </div>
     )
   }

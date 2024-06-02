@@ -34,7 +34,7 @@ function HomeAdmin() {
 
       setUpdates({policies: [policies[0], policies[1], policies[2]], users: [users[0], users[1], users[2]], claims: [claims[0], claims[1], claims[2]], lengths: {policies: policies.length, users: users.length, claims: claims.length}})
     } catch (error) {
-      setError({err: true, msg: error.message})
+      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
     }

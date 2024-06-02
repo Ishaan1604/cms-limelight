@@ -281,7 +281,7 @@ function PoliciesAdmin() {
                       setPolicies(policies.filter((placholder) => placholder._id !== policy._id))
                     } catch (error) {
                       console.log(error)
-                      setError({err: true, msg: error.message})
+                      setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
                     } finally {
                       setIsLoading(false)
                     }
