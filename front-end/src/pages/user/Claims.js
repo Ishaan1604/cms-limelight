@@ -4,12 +4,15 @@ import axios from 'axios';
 import { CheckButton} from '../../components';
 import leftArrow from '../../assets/leftArrow.svg'
 import rightArrow from '../../assets/rightArrow.svg'
+import { useGlobalContext } from '../../context';
+import { useNavigate } from 'react-router-dom';
 
 function Claims() {
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState({err: false, msg: null});
+  const {error, setError} = useGlobalContext();
   const [claims, setClaims] = useState([])
   const [queries, setQueries] = useState({page: 1, limit: 10})
+  const navigate = useNavigate();
 
   const fetchData = async() => {
     console.log(queries)
@@ -212,13 +215,11 @@ function Claims() {
       </div>
     )
   }
+
   if (error.err) {
-    return (
-      <div className='error-div'>
-        <p>{error.msg}</p>
-      </div>
-    )
+    navigate('/error/Error')
   }
+
   return (
     <section className='flex row'>
       <NavBar/>

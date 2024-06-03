@@ -18,7 +18,7 @@ function MakePolicy({onClick}) {
     try {
       setIsLoading(true)
 
-      const {data} = await axios.post(`http://localhost:3000/api/v1/cms/admin/policies`, policy, {
+      await axios.post(`http://localhost:3000/api/v1/cms/admin/policies`, policy, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
         }

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import NavBar from './NavBar'
 import { Updates } from '../../components';
 import axios from 'axios';
+import { useGlobalContext } from '../../context';
+import { useNavigate } from 'react-router-dom';
 
 function HomeAdmin() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({err: false, msg: null});
+  const {error, setError} = useGlobalContext();
   const [updates, setUpdates] = useState({policies: [], users: [], claims: [], lengths: {}})
+  const navigate = useNavigate();
 
   const fetchData = async() => {
     try {
@@ -55,12 +58,9 @@ function HomeAdmin() {
       </div>
     )
   }
+
   if (error.err) {
-    return (
-      <div className='error-div'>
-        <p>{error.msg}</p>
-      </div>
-    )
+    navigate('/error/Error')
   }
 
   return (

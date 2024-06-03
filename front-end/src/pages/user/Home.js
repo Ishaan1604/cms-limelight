@@ -3,12 +3,13 @@ import NavBar from './NavBar'
 import { useNavigate } from 'react-router-dom'
 import { FormRow, Updates } from '../../components';
 import axios from 'axios';
+import { useGlobalContext } from '../../context';
 
 function Home() {
   const navigate = useNavigate();
   const [values, setValues] = useState({name: localStorage.name, email: localStorage.email})
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({err: false, msg: null});
+  const {error, setError} = useGlobalContext();
   const [updates, setUpdates] = useState({policies: [], myPolicies: [], claims: []})
 
   const fetchData = async() => {
@@ -100,12 +101,9 @@ function Home() {
       </div>
     )
   }
+
   if (error.err) {
-    return (
-      <div className='error-div'>
-        <p>{error.msg}</p>
-      </div>
-    )
+    navigate('error/Error')
   }
 
   return (

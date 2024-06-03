@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from './NavBar'
 import axios from 'axios';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useGlobalContext } from '../../context';
 
 function Policy() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState({err: false, msg: null});
+  const {error, setError} = useGlobalContext();
   const [policy, setPolicy] = useState([])
   const policy_id = useLocation().pathname.split('/').pop();
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ function Policy() {
     try {
       setIsLoading(true)
 
-      const {data} = await axios.post(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/${policy_id}`, policy, {
+      await axios.post(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/${policy_id}`, policy, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
         }
@@ -73,13 +74,11 @@ function Policy() {
       </div>
     )
   }
+
   if (error.err) {
-    return (
-      <div className='error-div'>
-        <p>{error.msg}</p>
-      </div>
-    )
+    navigate('/error/Error')
   }
+
   return (
     <section className='flex row'>
       <NavBar/>

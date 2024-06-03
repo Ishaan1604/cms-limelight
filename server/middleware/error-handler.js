@@ -3,13 +3,11 @@ const {StatusCodes} = require('http-status-codes');
 const errorHandler = async(err, req, res, next) => {
   // console.log(err)
     const errObject = {
-        message: err.message || 'Something went wrong',
+        msg: err.message || 'Something went wrong',
         statusCode: err.statusCode || 500
     }
     if (err.name === 'ValidationError') {
-        errObject.msg = Object.values(err.errors)
-          .map((item) => item.message)
-          .join(',');
+        errObject.msg = err._message + ': missing '+ Object.keys(err.errors).join(', ');
         errObject.statusCode = 400;
       }
       if (err.code && err.code === 11000) {
@@ -23,7 +21,7 @@ const errorHandler = async(err, req, res, next) => {
         errObject.statusCode = 404;
       }
 
-    return res.status(errObject.statusCode).json({msg: errObject.message})
+    return res.status(errObject.statusCode).json({msg: errObject.msg})
 }
 
 module.exports = errorHandler;

@@ -220,9 +220,13 @@ body {
 }
 
 .error-div {
-  background-color: rgba(226, 46, 46, 0.905);
-  margin: auto;
+  background-color: var(--input-background);
   text-align: center;
+  color: var(--brand-light-purple);
+}
+
+.error-div > :nth-child(n) {
+  margin: 5%;
 }
 
 .success-div {

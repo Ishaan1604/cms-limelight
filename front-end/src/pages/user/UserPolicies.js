@@ -6,6 +6,7 @@ import leftArrow from '../../assets/leftArrow.svg'
 import rightArrow from '../../assets/rightArrow.svg'
 import MakeClaim from './MakeClaim';
 import { useGlobalContext } from '../../context';
+import { useNavigate } from 'react-router-dom';
 
 function UserPolicies() {
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +15,7 @@ function UserPolicies() {
   const [queries, setQueries] = useState({page: 1, limit: 10})
   const [claimModal, setClaimModal] = useState(false)
   const [policyId, setPolicyId] = useState(null)
+  const navigate = useNavigate();
 
   const fetchData = async() => {
     try {
@@ -205,13 +207,11 @@ function UserPolicies() {
       </div>
     )
   }
+
   if (error.err) {
-    return (
-      <div className='error-div'>
-        <p>{error.msg}</p>
-      </div>
-    )
+    navigate('/error/Error')
   }
+  
   return (
     <>
       {

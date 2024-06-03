@@ -4,7 +4,7 @@ import axios from 'axios';
 import { CheckButton} from '../../components';
 import leftArrow from '../../assets/leftArrow.svg'
 import rightArrow from '../../assets/rightArrow.svg'
-import { Link} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import PolicyModal from './PolicyModal';
 import MakePolicy from './MakePolicy';
 import { useGlobalContext } from '../../context';
@@ -17,6 +17,7 @@ function PoliciesAdmin() {
   const [policyModal, setPolicyModal] = useState(false)
   const [policyId, setPolicyId] = useState(null)
   const [addPolicyModal, setAddPolicyModal] = useState(false)
+  const navigate = useNavigate();
 
   const fetchData = async() => {
     try {
@@ -208,13 +209,12 @@ function PoliciesAdmin() {
       </div>
     )
   }
+
   if (error.err) {
-    return (
-      <div className='error-div'>
-        <p>{error.msg}</p>
-      </div>
-    )
+    console.log(error)
+    navigate('/error/Error')
   }
+
   return (
     <>
       {
@@ -253,7 +253,6 @@ function PoliciesAdmin() {
         <div className='tile-container grid'>
           {
             policies.length > 0 ? policies.map((policy) => {
-              console.log(policy.claims)
               return (
                 <Link to={`/admin/claims?policyId=${policy._id}`} className='tile flex row center' style={{textDecoration: 'none'}}>
                   <h3><span className='bold'>Policy Name: </span>{policy.name}</h3>
@@ -278,9 +277,8 @@ function PoliciesAdmin() {
                         }
                       })
 
-                      setPolicies(policies.filter((placholder) => placholder._id !== policy._id))
+                      setPolicies(policies.filter((placholder) => placholder._id !== data.policy._id))
                     } catch (error) {
-                      console.log(error)
                       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
                     } finally {
                       setIsLoading(false)
