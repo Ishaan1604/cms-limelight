@@ -35,7 +35,7 @@ function MakeClaim({policyId, onClick}) {
       // }
 
       setPolicy(data.myPolicy)
-      setClaim({policyId: data.myPolicy.policyId, userId: data.myPolicy.userId, policyName: data.myPolicy.policyName, policyType: data.myPolicy.policyType})
+      setClaim({policyId: data.myPolicy._id, userId: data.myPolicy.userId, policyName: data.myPolicy.policyName, policyType: data.myPolicy.policyType})
       
     } catch (error) {
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
@@ -70,7 +70,6 @@ function MakeClaim({policyId, onClick}) {
       })
       navigate(`/${localStorage.name}/claims`)
     } catch (error) {
-      console.log(error)
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
@@ -96,9 +95,8 @@ function MakeClaim({policyId, onClick}) {
     <section className='modal flex center'>
       <div className='form-container flex center'>
         <form onChange={handleChange} className='form flex row' style={{justifyContent: 'space-between'}} onSubmit={handleSubmit} onClick={onClick}>
-          <FormRow type='text' name='_id' id='_id' value={policy._id} readOnly='true'/>
           <FormRow type='text' name='userId' id='userId' value={policy.userId} readOnly='true'/>
-          <FormRow type='text' name='policyId' id='policyId' value={policy.policyId} readOnly='true'/>
+          <FormRow type='text' name='policyId' id='policyId' value={policy._id} readOnly='true'/>
           <FormRow type='text' name='policyName' id='policyName' value={policy.policyName} readOnly='true'/>
           <FormRow type='text' name='policyType' id='policyType' value={policy.policyType} readOnly='true'/>
           <FormRow type='text' name='description' id='description' value={policy.description} />

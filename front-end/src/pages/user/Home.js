@@ -16,24 +16,24 @@ function Home() {
     try {
       setIsLoading(true)
 
-      const {data: policies} = await axios.get(`http://localhost:3000/api/v1/cms/policies?limit=3&sort=-updatedAt`, {
+      const {data: {policies}} = await axios.get(`http://localhost:3000/api/v1/cms/policies?sort=-updatedAt`, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
         }
       })
 
-      const {data: myPolicies} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies?limit=3&sort=-updatedAt`, {
+      const {data: {myPolicies}} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myPolicies?sort=-updatedAt`, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
         }
       })
 
-      const {data: claims} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myClaims?limit=3&sort=-updatedAt`, {
+      const {data: {claims}} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myClaims?status=pending approved rejected&sort=-updatedAt`, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
         }
       })
-
+      
       setUpdates({policies, myPolicies, claims})
     } catch (error) {
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
@@ -111,7 +111,7 @@ function Home() {
       <NavBar/>
       <div className='side-bar flex column center'>
         <h1>Welcome!</h1>
-        <h1 style={{textAlign: 'center', textTransform: 'capitalize'}}>{localStorage.name}</h1>
+        <h1 style={{textAlign: 'center'}}>{localStorage.name}</h1>
       </div>
       <div className='home-container grid'>
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}} onChange={(e) => {
@@ -126,7 +126,8 @@ function Home() {
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}}>
           <h1>Policy Updates</h1>
           {
-            updates.policies.length > 0 ? updates.policies.map((policy) => {
+            updates.policies.length > 0 ? updates.policies.map((policy, i) => {
+              if (i > 2 || i >= updates.policies.length) return;
               return <Updates type='policy' content={policy} />
             }) : <h1>No Policy Updates</h1>
           }
@@ -134,15 +135,17 @@ function Home() {
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}}>
           <h1>My Policy Updates</h1>
           {
-            updates.myPolicies.length > 0 ? updates.myPolicies.map((policy) => {
-              return <Updates type='user-policy' content={policy} />
+            updates.myPolicies.length > 0 ? updates.myPolicies.map((userPolicy, i) => {
+              if (i > 2 || i >= updates.myPolicies.length) return;
+              return <Updates type='user-policy' content={userPolicy} />
             }) : <h1>No User-Policy Updates</h1>
           }
         </div>
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}}>
           <h1>My Claims Update</h1>
           {
-            updates.claims.length > 0 ? updates.claims.map((claim) => {
+            updates.claims.length > 0 ? updates.claims.map((claim, i) => {
+              if (i > 2 || i >= updates.claims.length) return;
               return <Updates type='claim' content={claim} />
             }) : <h1>No Claim Updates</h1>
           }

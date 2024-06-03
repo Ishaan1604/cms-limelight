@@ -15,7 +15,6 @@ function Claims() {
   const navigate = useNavigate();
 
   const fetchData = async() => {
-    console.log(queries)
     try {
       const {data} = await axios.get(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/myClaims?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
         headers: {
@@ -157,7 +156,7 @@ function Claims() {
       if (!e.target.checked) {
         sortArr = sortArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, sort: sortArr.join(' ')})
+      setQueries({...queries, sort: sortArr.join(' ').trim()})
 
       return;
     }
@@ -171,7 +170,7 @@ function Claims() {
       if (!e.target.checked) {
         policyTypeArr = policyTypeArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, policyType: policyTypeArr.join(' ')})
+      setQueries({...queries, policyType: policyTypeArr.join(' ').trim()})
 
       return;
     }
@@ -185,7 +184,7 @@ function Claims() {
       if (!e.target.checked) {
         statusArr = statusArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, status: statusArr.join(' ')})
+      setQueries({...queries, status: statusArr.join(' ').trim()})
 
       return;
     }

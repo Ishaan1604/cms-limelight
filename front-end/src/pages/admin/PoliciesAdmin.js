@@ -151,7 +151,7 @@ function PoliciesAdmin() {
       if (!e.target.checked) {
         sortArr = sortArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, sort: sortArr.join(' ')})
+      setQueries({...queries, sort: sortArr.join(' ').trim()})
 
       return;
     }
@@ -165,7 +165,7 @@ function PoliciesAdmin() {
       if (!e.target.checked) {
         policyTypeArr = policyTypeArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, policyType: policyTypeArr.join(' ')})
+      setQueries({...queries, policyType: policyTypeArr.join(' ').trim()})
 
       return;
     }
@@ -179,7 +179,7 @@ function PoliciesAdmin() {
       if (!e.target.checked) {
         activeArr = activeArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, active: activeArr.join(' ')})
+      setQueries({...queries, active: activeArr.join(' ').trim()})
 
       return;
     }
@@ -211,7 +211,6 @@ function PoliciesAdmin() {
   }
 
   if (error.err) {
-    console.log(error)
     navigate('/error/Error')
   }
 
@@ -225,10 +224,8 @@ function PoliciesAdmin() {
       }
       {
         policyModal && <PolicyModal policyId={policyId} onClick={(e) => {
-          if (e.target.name === 'cancel') {
             setPolicyModal(false)
             return;
-          }
         }}/>
       }
       <section className='flex row'>
@@ -260,7 +257,7 @@ function PoliciesAdmin() {
                   <h3><span className='bold'>Cost: </span>{policy.cost}</h3>
                   <h3><span className='bold'>Claim Amount: </span>${policy.claimAmount}</h3>
                   <h3><span className='bold'>Validity: </span>{policy.validity}</h3>
-                  <h3><span className='bold'>Status: </span>{policy.active === 'false' ? 'Expired' : 'Active'}</h3>
+                  <h3><span className='bold'>Status: </span>{policy.active  ? 'Active' : 'Expired'}</h3>
                   <button className='btn submit-btn' style={{width: '45%'}} onClick={(e) => {
                     e.preventDefault();
                     setPolicyModal(true);
@@ -271,14 +268,14 @@ function PoliciesAdmin() {
                     try {
                       setIsLoading(true)
 
-                      const {data} = await axios.patch(`http://localhost:3000/admin/policies/${policy._id}`, {...policy, active: false}, {
+                      const {data} = await axios.patch(`http://localhost:3000/api/v1/cms/admin/policies/${policy._id}`, {...policy, active: false}, {
                         headers: {
                           Authorization: `Bearer ${localStorage.token}`
                         }
                       })
 
                       setPolicies(policies.filter((placholder) => placholder._id !== data.policy._id))
-                    } catch (error) {
+                    } catch (er) {
                       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
                     } finally {
                       setIsLoading(false)

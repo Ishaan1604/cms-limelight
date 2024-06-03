@@ -21,7 +21,6 @@ function ClaimsAdmin() {
 
   const fetchData = async() => {
     try {
-      console.log(queries)
       const {data} = await axios.get(`http://localhost:3000/api/v1/cms/admin/claims?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
@@ -162,7 +161,7 @@ function ClaimsAdmin() {
       if (!e.target.checked) {
         sortArr = sortArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, sort: sortArr.join(' ')})
+      setQueries({...queries, sort: sortArr.join(' ').trim()})
 
       return;
     }
@@ -176,7 +175,7 @@ function ClaimsAdmin() {
       if (!e.target.checked) {
         policyTypeArr = policyTypeArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, policyType: policyTypeArr.join(' ')})
+      setQueries({...queries, policyType: policyTypeArr.join(' ').trim()})
 
       return;
     }
@@ -190,7 +189,7 @@ function ClaimsAdmin() {
       if (!e.target.checked) {
         statusArr = statusArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, status: statusArr.join(' ')})
+      setQueries({...queries, status: statusArr.join(' ').trim()})
 
       return;
     }
@@ -229,10 +228,8 @@ function ClaimsAdmin() {
     <>
       {
         claimModal && <ClaimsModal claimId={claimId} onClick={(e) => {
-          if (e.target.name === 'cancel') {
             setClaimModal(false);
             return;
-          }
         }} />
       }
       <section className='flex row'>

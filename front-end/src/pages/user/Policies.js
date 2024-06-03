@@ -16,7 +16,6 @@ function Policies() {
 
   const fetchData = async() => {
     try {
-      console.log(queries)
       const {data} = await axios.get(`http://localhost:3000/api/v1/cms/policies?${Object.entries(queries).map((item) => item[0] + '=' + item[1]).join('&')}`, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
@@ -147,7 +146,7 @@ function Policies() {
       if (!e.target.checked) {
         sortArr = sortArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, sort: sortArr.join(' ')})
+      setQueries({...queries, sort: sortArr.join(' ').trim()})
 
       return;
     }
@@ -161,7 +160,7 @@ function Policies() {
       if (!e.target.checked) {
         policyTypeArr = policyTypeArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, policyType: policyTypeArr.join(' ')})
+      setQueries({...queries, policyType: policyTypeArr.join(' ').trim()})
 
       return;
     }
@@ -175,7 +174,7 @@ function Policies() {
       if (!e.target.checked) {
         activeArr = activeArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, active: activeArr.join(' ')})
+      setQueries({...queries, active: activeArr.join(' ').trim()})
 
       return;
     }

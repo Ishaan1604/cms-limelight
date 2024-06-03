@@ -66,7 +66,7 @@ const getAllClaims = async(req, res) => {
         filterObj.userId = userId
     }
 
-    filterObj.status = status || 'pending'
+    filterObj.status = status ? {$in : status.split(' ')} :  'pending'
 
     const pageSort = sort || 'updatedAt';
     const pageLimit = Number(limit) || 10;

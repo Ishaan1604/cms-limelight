@@ -3,10 +3,11 @@ import React from 'react'
 function Updates({type, content}) {
     let message = '';
     if (content.updatedAt === content.createdAt) {
+        
         message = `New ${type} added: ${content.policyName || content.name}`
     }
 
-    if (type === 'claim' && !content.status === 'pending') {
+    if (type === 'claim' && content.status !== 'pending') {
         message =  `Claim for ${content.policyName} ${content.status}`
     }
 

@@ -12,7 +12,6 @@ function PolicyModal({policyId, onClick}) {
   const navigate = useNavigate();
   
   const fetchData = async() => {
-    console.log(policyId)
     try {
       const {data} = await axios.get(`http://localhost:3000/api/v1/cms/policies/${policyId}`, {
         headers: {
@@ -36,7 +35,6 @@ function PolicyModal({policyId, onClick}) {
       setPolicy(data.policy)
       
     } catch (error) {
-      console.log(error)
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
@@ -52,14 +50,13 @@ function PolicyModal({policyId, onClick}) {
     try {
       setIsLoading(true)
 
-      const {data} = await axios.patch(`http://localhost:3000/api/v1/cms/admin/policies/${policyId.policyId}`, policy, {
+      const {data} = await axios.patch(`http://localhost:3000/api/v1/cms/admin/policies/${policyId}`, policy, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
         }
       })
-      navigate(`/admin/policies`)
+      onClick();
     } catch (error) {
-      console.log(error)
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
       setIsLoading(false)
@@ -84,7 +81,7 @@ function PolicyModal({policyId, onClick}) {
   return (
     <section className='modal flex center'>
       <div className='form-container flex center'>
-        <form onChange={handleChange} className='form flex row' style={{justifyContent: 'space-between'}} onSubmit={handleSubmit} onClick={onClick}>
+        <form onChange={handleChange} className='form flex row' style={{justifyContent: 'space-between'}} onSubmit={handleSubmit}>
           <FormRow type='text' name='_id' id='_id' value={policy._id} readOnly='true'/>
           <FormRow type='text' name='name' id='name' value={policy.name} />
           <SelectRow name='policyType' id='policyType' names={['Health', 'Life', 'Auto', 'Travel', 'Property', 'Business', 'Renters', 'Homeowners', 'Disability', 'Liability', 'Pet', 'Critical Illness']} value={policy.policyType}/>
@@ -93,7 +90,7 @@ function PolicyModal({policyId, onClick}) {
           <FormRow type='text' name='cost' id='cost' value={policy.cost} />
           <FormRow type='text' name='validity' id='validity' value={policy.validity} />
           <button type='submit' className='btn submit-btn' style={{width: '45%'}}>Update Policy</button>
-          <button type='button' name='cancel' className='btn submit-btn' style={{width: '45%'}}>Cancel</button>
+          <button type='button' name='cancel' className='btn submit-btn' style={{width: '45%'}} onClick={onClick}>Cancel</button>
         </form>
       </div>
     </section>

@@ -126,7 +126,7 @@ function Users() {
       if (!e.target.checked) {
         sortArr = sortArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, sort: sortArr.join(' ')})
+      setQueries({...queries, sort: sortArr.join(' ').trim()})
 
       return;
     }
@@ -181,7 +181,7 @@ function Users() {
             return (
               <Link to={`/admin/claims?userId=${user._id}`} className='tile flex row center' style={{textDecoration: 'none'}}>
                 <h3><span className='bold'>User Name: </span>{user.name}</h3>
-                <h3><span className='bold'>User Email: </span>{user.email}</h3>
+                <h3 style={{textTransform: 'none'}}><span className='bold'>User Email: </span>{user.email}</h3>
               </Link>
             )
           }) : <div className='tile flex center'>

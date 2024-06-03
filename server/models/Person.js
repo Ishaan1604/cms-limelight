@@ -27,6 +27,8 @@ const personSchema = mongoose.Schema({
         type: Number,
         default: 0,
     }
+}, {
+    timestamps: true,
 })
 
 personSchema.pre('save', async function(next)  {

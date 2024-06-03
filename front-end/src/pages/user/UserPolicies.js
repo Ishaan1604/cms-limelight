@@ -149,7 +149,7 @@ function UserPolicies() {
       if (!e.target.checked) {
         sortArr = sortArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, sort: sortArr.join(' ')})
+      setQueries({...queries, sort: sortArr.join(' ').trim()})
 
       return;
     }
@@ -163,7 +163,7 @@ function UserPolicies() {
       if (!e.target.checked) {
         policyTypeArr = policyTypeArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, policyType: policyTypeArr.join(' ')})
+      setQueries({...queries, policyType: policyTypeArr.join(' ').trim()})
 
       return;
     }
@@ -177,7 +177,7 @@ function UserPolicies() {
       if (!e.target.checked) {
         expiredArr = expiredArr.filter((value) => value !== e.target.name)
       }
-      setQueries({...queries, expired: expiredArr.join(' ')})
+      setQueries({...queries, expired: expiredArr.join(' ').trim()})
 
       return;
     }
