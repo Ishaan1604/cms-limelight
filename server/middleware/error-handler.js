@@ -1,7 +1,7 @@
 const {StatusCodes} = require('http-status-codes');
 
 const errorHandler = async(err, req, res, next) => {
-  // console.log(err)
+  console.log(err)
     const errObject = {
         msg: err.message || 'Something went wrong',
         statusCode: err.statusCode || 500
