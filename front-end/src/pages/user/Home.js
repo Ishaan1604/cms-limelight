@@ -111,7 +111,7 @@ function Home() {
       <NavBar/>
       <div className='side-bar flex column center'>
         <h1>Welcome!</h1>
-        <h1 style={{textAlign: 'center'}}>{localStorage.name}</h1>
+        <h1 style={{textAlign: 'center', textTransform: 'capitalize'}}>{localStorage.name}</h1>
       </div>
       <div className='home-container grid'>
         <div className='home-tile flex row' style={{ justifyContent: 'space-evenly'}} onChange={(e) => {
