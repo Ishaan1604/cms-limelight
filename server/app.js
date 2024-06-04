@@ -5,7 +5,7 @@ const fileupload = require('express-fileupload');
 require('dotenv').config();
 require('express-async-errors')
 const cors = require('cors')
-const swaggerSpecs = require('./swaggerSpec')
+const swaggerDocument = require('./swagger-output.json')
 const swaggerUi = require('swagger-ui-express')
 
 const authRouter = require('./routers/auth')
@@ -23,7 +23,7 @@ const expireFn = require('./utils/expire-function');
 const expiryNotifFn = require('./utils/expiry-notif-fn');
 const expiredNotifFn = require('./utils/expired-notif');
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use(cors())
 
 app.use(express.json())
