@@ -6,6 +6,47 @@ const {StatusCodes} = require('http-status-codes')
 require('dotenv').config();
 
 const register = async(req, res) => {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string",
+                                "format": "email"
+                            },
+                            "password": {
+                                "type": "string"
+                            }
+                        }
+                    }  
+                }
+            }
+        } 
+    */
+
+    /* #swagger.responses[201] = {
+        "description": "New user created",
+            "content": {
+              "application/json":{
+                "schema":{
+                  allOf: [
+                    {$ref: "#/components/schemas/Person"},
+                    {$ref: "#/components/schemas/jwtToken"}
+                  ]
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ['Auth']
     const people = await Person.find({});
 
     const role = people.length > 0 ? 'user' : 'admin'
@@ -16,6 +57,44 @@ const register = async(req, res) => {
 }
 
 const login = async(req, res) => {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "type": "string",
+                                "format": "email"
+                            },
+                            "password": {
+                                "type": "string"
+                            }
+                        }
+                    }  
+                }
+            }
+        } 
+    */
+
+    /* #swagger.responses[200] = {
+        "description": "User successfully logged in",
+            "content": {
+              "application/json":{
+                "schema":{
+                  allOf: [
+                    {$ref: "#/components/schemas/Person"},
+                    {$ref: "#/components/schemas/jwtToken"}
+                  ]
+                }
+              }
+            }
+        } 
+    */
+    /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ['Auth']
     const {email, password} = req.body;
 
     if (!email || !password) {
@@ -38,6 +117,41 @@ const login = async(req, res) => {
 }
 
 const resetPassword = async(req, res) => {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        "type": "object",
+                        "properties": {
+                            "email": {
+                                "type": "string",
+                                "format": "email"
+                            },
+                            "password": {
+                                "type": "string"
+                            }
+                        }
+                    }  
+                }
+            }
+        } 
+    */
+
+    /* #swagger.responses[200] = {
+        "description": "Password Reseted",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "$ref": "#components/schemas/Person"
+                }
+              }
+            }
+        } 
+    */
+    /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ['Auth']
     const {email, password} = req.body;
 
     if (!email || !password) {

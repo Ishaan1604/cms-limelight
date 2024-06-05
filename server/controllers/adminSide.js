@@ -8,6 +8,24 @@ const UserPolicy = require('../models/UserPolicy')
 require('dotenv').config();
 
 const getAllUsers = async(req, res) => {
+    /* #swagger.responses[200] = {
+        "description": "Got all the users",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items": {
+                    $ref: "#/components/schemas/Person"
+                  }
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["Admin"]
+
     const {userName : name, email, sort, limit, page} = req.query;
     let filterObj = {}
 
@@ -33,6 +51,21 @@ const getAllUsers = async(req, res) => {
 }
 
 const getUser = async(req, res) => {
+     /* #swagger.responses[200] = {
+        "description": "Got a specific user",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/Person"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[404] = {"description": "No user found with this id"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+   //    #swagger.tags = ["Admin"]
     const {user_id} = req.params
 
     const user = await Person.findOne({_id: user_id, personType: 'user'});
@@ -45,6 +78,23 @@ const getUser = async(req, res) => {
 
 const getAllClaims = async(req, res) => {
     // const {user_id, policy_id} = req.params;
+    /* #swagger.responses[200] = {
+        "description": "Got all the claims",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items": {
+                    $ref: "#/components/schemas/Claim"
+                  }
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["Admin"]
 
     const {policyName, policyType, status, sort, limit, page, policyId, userId} = req.query;
     let filterObj = {};
@@ -84,6 +134,21 @@ const getAllClaims = async(req, res) => {
 }
 
 const getClaim = async(req, res) => {
+    /* #swagger.responses[200] = {
+        "description": "Got a specific claim",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/Claim"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[404] = {"description": "No claim found with this id"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+   //    #swagger.tags = ["Admin"]
     const {claim_id} = req.params;
     const claim = await Claim.findOne({_id: claim_id})
     if (!claim) {
@@ -93,6 +158,39 @@ const getClaim = async(req, res) => {
 }
 
 const updateClaim = async(req, res) => {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "string",
+                                "enum": ["pending, rejected, approved"]
+                            }
+                        }
+                    }  
+                }
+            }
+        } 
+    */
+
+     /* #swagger.responses[200] = {
+        "description": "Claim Updated",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/Claim"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[404] = {"description": "No claim found with this id"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["Admin"]
     const {claim_id} = req.params;
 
     const claim = await Claim.findOne({_id: claim_id})

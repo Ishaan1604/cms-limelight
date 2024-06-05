@@ -3,7 +3,6 @@ const Policy = require('../models/Policy');
 const { NotFoundError } = require('../errors');
 
 const getAllPolicy = async(req, res) => {
-
     const {policyName: name, policyType, sort, limit, page, active} = req.query;
     const pageSort = sort || 'name'
     // const {policyName: name, policyType} = req.filterObj
@@ -29,11 +28,44 @@ const getAllPolicy = async(req, res) => {
                                 .skip(skip)
                                 .limit(pageLimit)
 
+    /* #swagger.responses[200] = {
+        "description": "Got all the policies",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items": {
+                    $ref: "#/components/schemas/Policy"
+                  }
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["Policy"]
+
                                 
     res.status(StatusCodes.OK).json({policies})
 }
 
 const getPolicy = async(req, res) => {
+    /* #swagger.responses[200] = {
+        "description": "Got a specific policy",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/Policy"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[404] = {"description": "No policy found with this id"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["Policy"]
     const {policy_id} = req.params;
 
     const policy = await Policy.findOne({_id: policy_id});
@@ -45,11 +77,87 @@ const getPolicy = async(req, res) => {
 }
 
 const createPolicy = async(req, res) => {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": 'string'
+                            },
+                            "policyType": {
+                                "type": "string",
+                                "enum": ['Health', 'Life', 'Auto', 'Travel', 'Property', 'Business', 'Renters', 'Homeowners', 'Disability', 'Liability', 'Pet', 'Critical Illness']
+                            },
+                            "description": {
+                                "type": 'string',
+                            },
+                            "cost": {
+                                "type": 'string',
+                            },
+                            "claimAmount": {
+                                "type": 'number',
+                                "description": 'The total amount of money that can be claimed against this policy'
+                            },
+                            "validity": {
+                                "type": 'string',
+                                "description": 'The length of time this policy lasts'
+                            },
+                        }
+                    }  
+                }
+            }
+        } 
+    */
+
+     /* #swagger.responses[201] = {
+        "description": "Created a new policy",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/Policy"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["Admin"]
     const policy = await Policy.create(req.body)
     res.status(StatusCodes.CREATED).json({policy})
 }
 
 const updatePolicy = async(req, res) => {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#components/schemas/Policy"
+                    }  
+                }
+            }
+        } 
+    */
+
+     /* #swagger.responses[200] = {
+        "description": "Policy Updated",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/Policy"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[404] = {"description": "No policy found with this id"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["Admin"]
     const {policy_id} = req.params;
 
     const policy = await Policy.findOneAndUpdate({_id: policy_id}, {...req.body}, {new: true, runValidators: true})
@@ -60,6 +168,21 @@ const updatePolicy = async(req, res) => {
 }
 
 const deletePolicy = async(req, res) => {
+    /* #swagger.responses[200] = {
+        "description": "Deleted the policy",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/Policy"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[404] = {"description": "No policy found with this id"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["Admin"]
     const {policy_id} = req.params;
 
     const policy = await Policy.findOneAndDelete({_id: policy_id})

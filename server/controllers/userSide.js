@@ -8,6 +8,23 @@ const Person = require('../models/Person');
 const jwt = require('jsonwebtoken');
 
 const getAllUserPolicy = async(req, res) => {
+    /* #swagger.responses[200] = {
+        "description": "Got all the policies for this user",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items": {
+                    $ref: "#/components/schemas/UserPolicy"
+                  }
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["User"]
     const {_id: userId} = req.user
 
     const {sort, limit, page, policyName, policyType, expired, policyId} = req.query;
@@ -44,6 +61,21 @@ const getAllUserPolicy = async(req, res) => {
 }
 
 const getUserPolicy = async(req, res) => {
+     /* #swagger.responses[200] = {
+        "description": "Got a specific policy for this user",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/UserPolicy"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[404] = {"description": "No policy found with this id for this user"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["User"]
     const {_id: userId} = req.user
     const {policy_id: policyId} = req.params;
     // console.log(req.params)
@@ -58,6 +90,23 @@ const getUserPolicy = async(req, res) => {
 }
 
 const getAllUserClaims = async(req, res) => {
+    /* #swagger.responses[200] = {
+        "description": "Got all the claims for this user",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "type": "array",
+                  "items": {
+                    $ref: "#/components/schemas/Claim"
+                  }
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["User"]
     const {_id: userId} = req.user;
 
     const {policyName, policyType, status, sort, page, limit, policyId} = req.query;
@@ -94,6 +143,32 @@ const getAllUserClaims = async(req, res) => {
 }
 
 const addPolicy = async(req, res) => {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        $ref: "#components/schemas/Policy"
+                    }  
+                }
+            }
+        } 
+    */
+
+     /* #swagger.responses[201] = {
+        "description": "Created a new policy for this user",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/UserPolicy"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["User"]
     const {_id: userId} = req.user;
     const {policy_id: policyId} = req.params;
 
@@ -111,6 +186,58 @@ const addPolicy = async(req, res) => {
 }
 
 const makeClaim = async(req, res) => {
+        /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "type": "string"
+                            },
+                            "policyId": {
+                                "type": "string"
+                            },
+                            "policyName": {
+                                "type": 'string'
+                            },
+                            "policyType": {
+                                "type": "string",
+                                "enum": ['Health', 'Life', 'Auto', 'Travel', 'Property', 'Business', 'Renters', 'Homeowners', 'Disability', 'Liability', 'Pet', 'Critical Illness']
+                            },
+                            "description": {
+                                "type": 'string',
+                            },
+                            "claimAmount": {
+                                "type": 'number',
+                                "description": 'The amount of money being claimed'
+                            },
+                            "document": {
+                                "type": 'buffer',
+                                "description": 'The evidence for the claim'
+                            },
+                        }
+                    }  
+                }
+            }
+        } 
+    */
+
+     /* #swagger.responses[201] = {
+        "description": "Created a new claim",
+            "content": {
+              "application/json":{
+                "schema":{
+                  $ref: "#/components/schemas/Claim"
+                }
+              }
+            }
+        } 
+    */
+   /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ["User"]
     const {_id: userId} = req.user;
     const {policy_id: policyId} = req.params;
     
@@ -140,6 +267,42 @@ const makeClaim = async(req, res) => {
 }
 
 const updateUser = async(req, res) => {
+    /*  #swagger.requestBody = {
+            required: true,
+            content: {
+                "application/json": {
+                    schema: {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string",
+                                "format": "email"
+                            },
+                        }
+                    }  
+                }
+            }
+        } 
+    */
+
+    /* #swagger.responses[200] = {
+        "description": "User updated",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "$ref": "#components/schemas/Person"
+                }
+              }
+            }
+        } 
+    */
+    /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+    // #swagger.responses[404] = {"description": "No user with this id"}
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ['User']
     const {_id: userId} = req.user;
 
     const user = await Person.findOneAndUpdate({_id: userId}, {...req.body, personType: 'user', password: req.user.password}, {new: true, runValidators: true})
@@ -152,6 +315,21 @@ const updateUser = async(req, res) => {
 
 const deleteUser = async(req, res) => {
     const {_id: userId} = req.user;
+    /* #swagger.responses[200] = {
+        "description": "User deleted",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "$ref": "#components/schemas/Person"
+                }
+              }
+            }
+        } 
+    */
+    /* #swagger.responses[400] = {"description": "Either a missing value or a duplicate value"} */
+    // #swagger.responses[404] = {"description": "No user with this id"}
+   /* #swagger.responses[500] = {"description": "Internal Server Error"} */
+//    #swagger.tags = ['User']
 
     const user = await Person.findOneAndDelete({_id: userId})
     if (!user) {
