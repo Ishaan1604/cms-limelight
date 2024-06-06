@@ -49,6 +49,6 @@ const start = async() => {
 };
 
 start();
-// setInterval(expireFn, 3600 * 1000)
-// setInterval(expiryNotifFn, 86400 * 1000)
-// setInterval(expiredNotifFn, 86400 * 1000)
+setInterval(expireFn, 3600 * 1000)
+setInterval(expiryNotifFn, 86400 * 1000)
+setInterval(expiredNotifFn, 86400 * 1000)
