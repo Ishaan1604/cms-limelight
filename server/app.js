@@ -7,6 +7,7 @@ require('express-async-errors')
 const cors = require('cors')
 const swaggerDocument = require('./swagger-output.json')
 const swaggerUi = require('swagger-ui-express')
+const {startMetricServer, collectDefaultMetrics, httpRequestDurationSeconds, httpRequestCounter} = require('./utils/metrics')
 
 const authRouter = require('./routers/auth')
 const userRouter = require('./routers/user')
@@ -29,6 +30,16 @@ app.use(cors())
 app.use(express.json())
 app.use(fileupload({}))
 
+collectDefaultMetrics();
+app.use((req, res, next) => {
+    const end = httpRequestDurationSeconds.startTimer()
+    res.on('finish', () => {
+        httpRequestCounter.inc({method: req.method, route: req.route ? req.route.path : req.path, status_code: res.statusCode})
+        end({method: req.method, route: req.route ? req.route.path : req.path, status_code: res.statusCode})
+    })
+    next();
+})
+
 app.use('/api/v1/cms/auth', authRouter)
 app.use('/api/v1/cms/policies', authMiddleware, policyRouter)
 app.use('/api/v1/cms/user/:user', authMiddleware, userRouter)
@@ -43,6 +54,7 @@ const start = async() => {
     try {
         await connectDB(process.env.MONGO_URI)
         app.listen(port, () => console.log(`Server now listening on port ${port}`));
+        startMetricServer();
     } catch (error) {
         console.log(error)
     }

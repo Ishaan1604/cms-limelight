@@ -1,0 +1,37 @@
+const client = require('prom-client');
+const app = require('express')();
+require('dotenv').config();
+
+const PORT = process.env.METRIC_PORT || 9100
+
+const collectDefaultMetrics = client.collectDefaultMetrics
+const httpRequestDurationSeconds = new client.Histogram({
+    name: 'http_request_duration_second',
+    help: "Duration of the http request in seconds",
+    labelNames: ['method', 'route', 'status_code'],
+})
+
+const httpRequestCounter = new client.Counter({
+    name: 'http_request_counter',
+    help: 'Number of hits each route gets',
+    labelNames: ['method', 'route', 'status_code']
+})
+
+app.get('/metrics', async(req, res) => {
+    res.set('Content-Type', client.register.contentType)
+    return res.send(await client.register.metrics())
+})
+
+const startMetricServer = async() => {
+    app.listen(PORT, () => {
+        console.log(`Metric server started on port ${PORT}`)
+    })
+
+}
+
+module.exports = {
+    startMetricServer,
+    collectDefaultMetrics,
+    httpRequestCounter,
+    httpRequestDurationSeconds,
+}
