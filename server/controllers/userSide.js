@@ -6,6 +6,7 @@ const Claim = require('../models/Claim')
 const fs = require('fs/promises');
 const Person = require('../models/Person');
 const jwt = require('jsonwebtoken');
+const {dbResponseDurationSecondsFn} = require('../utils/metrics')
 
 const getAllUserPolicy = async(req, res) => {
     /* #swagger.responses[200] = {
@@ -50,11 +51,11 @@ const getAllUserPolicy = async(req, res) => {
     const skip = (pageLimit * pageNumber)
 
     // const {policyName, policyType, expired, userId} = req.filterObj;
-    let myPolicies = await UserPolicy
+    let myPolicies = await dbResponseDurationSecondsFn(() => UserPolicy
                                         .find({...filterObj})
                                         .sort(pageSort)
                                         .skip(skip)
-                                        .limit(pageLimit);
+                                        .limit(pageLimit), 'get_all_user_policy');
     
 
     res.status(StatusCodes.OK).json({myPolicies})
@@ -81,7 +82,7 @@ const getUserPolicy = async(req, res) => {
     // console.log(req.params)
     // const {policyId, userId} = req.filterObj;
 
-    const myPolicy = await UserPolicy.findOne({_id: policyId, userId});
+    const myPolicy = await dbResponseDurationSecondsFn(() => UserPolicy.findOne({_id: policyId, userId}), 'get_a_user_policy');
     if (!myPolicy) {
         throw new NotFoundError(`No policy with id: ${policyId} for user: ${req.user.name}`)
     }
@@ -133,11 +134,11 @@ const getAllUserClaims = async(req, res) => {
     const skip = (pageLimit * pageNumber)
 
     
-    const claims = await Claim
+    const claims = await dbResponseDurationSecondsFn(() => Claim
                                 .find({...filterObj})
                                 .sort(pageSort)
                                 .skip(skip)
-                                .limit(pageLimit);
+                                .limit(pageLimit), 'get_all_user_claims');
 
     res.status(StatusCodes.OK).json({claims})
 }
@@ -181,7 +182,7 @@ const addPolicy = async(req, res) => {
     expirationDate.setFullYear(expirationDate.getFullYear() + year)
     expirationDate.setMonth(expirationDate.getMonth() + month)
 
-    const myPolicy = await UserPolicy.create({userId, policyId, policyName, policyType, amountRemaining, validity: expirationDate})
+    const myPolicy = await dbResponseDurationSecondsFn(() => UserPolicy.create({userId, policyId, policyName, policyType, amountRemaining, validity: expirationDate}), 'create_user_policy');
     res.status(StatusCodes.CREATED).json({myPolicy})
 }
 
@@ -262,7 +263,7 @@ const makeClaim = async(req, res) => {
     const claims = policy.claims > 0 ? policy.claims + 1 : 1;
     policy.claims = claims;
     await policy.save()
-    const user = await Person.findOneAndUpdate({_id: userId}, {...req.user, claims: req.user.claims + 1}, {new: true, runValidators: true})
+    const user = await dbResponseDurationSecondsFn(() => Person.findOneAndUpdate({_id: userId}, {...req.user, claims: req.user.claims + 1}, {new: true, runValidators: true}), 'create_user_claim');
     res.status(StatusCodes.CREATED).json({claim})
 }
 
@@ -305,7 +306,7 @@ const updateUser = async(req, res) => {
 //    #swagger.tags = ['User']
     const {_id: userId} = req.user;
 
-    const user = await Person.findOneAndUpdate({_id: userId}, {...req.body, personType: 'user', password: req.user.password}, {new: true, runValidators: true})
+    const user = await dbResponseDurationSecondsFn(() => Person.findOneAndUpdate({_id: userId}, {...req.body, personType: 'user', password: req.user.password}, {new: true, runValidators: true}), 'update_user');
     if (!user) {
         throw new NotFoundError(`No user with id: ${userId} found`)
     }
@@ -331,7 +332,7 @@ const deleteUser = async(req, res) => {
    /* #swagger.responses[500] = {"description": "Internal Server Error"} */
 //    #swagger.tags = ['User']
 
-    const user = await Person.findOneAndDelete({_id: userId})
+    const user = await dbResponseDurationSecondsFn(() => Person.findOneAndDelete({_id: userId}), 'delete_user');
     if (!user) {
         throw new NotFoundError(`No user with id: ${userId} found`)
     }

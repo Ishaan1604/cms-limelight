@@ -4,7 +4,8 @@ const {NotFoundError, BadRequestError} = require('../errors')
 const Claim = require('../models/Claim')
 const sgMail = require('@sendgrid/mail');
 const Policy = require('../models/Policy');
-const UserPolicy = require('../models/UserPolicy')
+const UserPolicy = require('../models/UserPolicy');
+const { dbResponseDurationSecondsFn } = require('../utils/metrics');
 require('dotenv').config();
 
 const getAllUsers = async(req, res) => {
@@ -41,12 +42,15 @@ const getAllUsers = async(req, res) => {
     const pageNumber = Number(page) - 1 || 0;
     const skip = (pageLimit * pageNumber)
     // const {userName: name} = req.filterObj;
-    const users = await Person
-                            .find({personType: 'user', ...filterObj})
-                            .sort(pageSort)
-                            .skip(skip)
-                            .limit(pageLimit);
+    const users = await dbResponseDurationSecondsFn(() => {
+      return Person
+                    .find({personType: 'user', ...filterObj})
+                    .sort(pageSort)
+                    .skip(skip)
+                    .limit(pageLimit);
+    }, 'get_all_users')
 
+  
     res.status(StatusCodes.OK).json({users})
 }
 
@@ -68,7 +72,7 @@ const getUser = async(req, res) => {
    //    #swagger.tags = ["Admin"]
     const {user_id} = req.params
 
-    const user = await Person.findOne({_id: user_id, personType: 'user'});
+    const user = await dbResponseDurationSecondsFn(() => Person.findOne({_id: user_id, personType: 'user'}), 'get_user');
     if (!user) {
         throw new NotFoundError(`No user with id: ${user_id} found`)
     }
@@ -124,11 +128,11 @@ const getAllClaims = async(req, res) => {
     const skip = (pageLimit * pageNumber)
 
     // const {policyName, policyType, status, policyId, userId} = req.filterObj;
-    const claims = await Claim
+    const claims = await dbResponseDurationSecondsFn(() => Claim
                             .find({...filterObj})
                             .sort(pageSort)
                             .skip(skip)
-                            .limit(pageLimit);
+                            .limit(pageLimit), 'get_all_claims');
                             
     res.status(StatusCodes.OK).json({claims})
 }
@@ -150,7 +154,7 @@ const getClaim = async(req, res) => {
    /* #swagger.responses[500] = {"description": "Internal Server Error"} */
    //    #swagger.tags = ["Admin"]
     const {claim_id} = req.params;
-    const claim = await Claim.findOne({_id: claim_id})
+    const claim = await dbResponseDurationSecondsFn(() => Claim.findOne({_id: claim_id}), 'get_claim');
     if (!claim) {
         throw new NotFoundError(`No claim found with id: ${claim_id}`)
     }
@@ -201,7 +205,7 @@ const updateClaim = async(req, res) => {
 
     claim.status = req.body.status;
 
-    await claim.save();
+    await dbResponseDurationSecondsFn(() => claim.save(), 'update_claim');
     
     const user = await Person.findOne({_id: claim.userId, personType: 'user'})
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)

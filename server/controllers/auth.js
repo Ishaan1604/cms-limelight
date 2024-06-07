@@ -2,7 +2,8 @@ const {BadRequestError, UnsupportedMediaError} = require('../errors')
 const Person = require('../models/Person')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
-const {StatusCodes} = require('http-status-codes')
+const {StatusCodes} = require('http-status-codes');
+const { dbResponseDurationSecondsFn } = require('../utils/metrics');
 require('dotenv').config();
 
 const register = async(req, res) => {
@@ -51,7 +52,9 @@ const register = async(req, res) => {
 
     const role = people.length > 0 ? 'user' : 'admin'
 
-    const person = await Person.create({...req.body, personType: role})
+    
+
+    const person = await dbResponseDurationSecondsFn(() => Person.create({...req.body, personType: role}), 'create_user')
     const token = jwt.sign({name: person.name, email: person.email, type: person.personType}, process.env.JWT_SECRET, {'expiresIn': '30d'})
     res.status(StatusCodes.CREATED).json({person, token})
 }
@@ -101,7 +104,7 @@ const login = async(req, res) => {
         throw new BadRequestError('Please provide an email and password')
     }
 
-    const person = await Person.findOne({email});
+    const person = await dbResponseDurationSecondsFn(() => Person.findOne({email}), 'login_user');
     
     if (!person) {
         throw new BadRequestError('Incorrect email, please try again')
@@ -167,7 +170,8 @@ const resetPassword = async(req, res) => {
     person.password = password
 
     // person = await Person.findOneAndUpdate({email}, {...person}, {new: true, runValidators: true})
-    await person.save();
+
+    await dbResponseDurationSecondsFn(() => person.save(), 'reset_password');
     res.status(StatusCodes.OK).json({person})
     
 }

@@ -17,6 +17,24 @@ const httpRequestCounter = new client.Counter({
     labelNames: ['method', 'route', 'status_code']
 })
 
+const dbResponseDurationSeconds = new client.Histogram({
+    name: 'db_request_duration_second',
+    help: "Duration of the db request in seconds",
+    labelNames: ['operation', 'success'],
+})
+
+const dbResponseDurationSecondsFn = async(fn, operation) => {
+    const end = dbResponseDurationSeconds.startTimer();
+    try {
+        const result = await fn()
+        end({operation, success: true})
+        return result
+    } catch (error) {
+        end({operation, success: false})
+        throw error
+    }
+}
+
 app.get('/metrics', async(req, res) => {
     res.set('Content-Type', client.register.contentType)
     return res.send(await client.register.metrics())
@@ -34,4 +52,5 @@ module.exports = {
     collectDefaultMetrics,
     httpRequestCounter,
     httpRequestDurationSeconds,
+    dbResponseDurationSecondsFn,
 }
