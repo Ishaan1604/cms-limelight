@@ -36,13 +36,6 @@ const userPolicySchema = mongoose.Schema({
     timestamps: true,
 })
 
-userPolicySchema.pre('save', async function(next) {
-
-
-    if (typeof this.validity === String) {
-        
-    }
-})
 
 
 module.exports = mongoose.model('UserPolicy', userPolicySchema)

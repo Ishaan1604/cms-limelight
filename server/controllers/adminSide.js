@@ -195,6 +195,10 @@ const updateClaim = async(req, res) => {
    /* #swagger.responses[404] = {"description": "No claim found with this id"} */
    /* #swagger.responses[500] = {"description": "Internal Server Error"} */
 //    #swagger.tags = ["Admin"]
+
+    if (!req.body.status) {
+      throw new BadRequestError('No status provided')
+    }
     const {claim_id} = req.params;
 
     const claim = await Claim.findOne({_id: claim_id})
