@@ -1,5 +1,4 @@
 const express = require('express');
-const connectDB = require('./db/connect');
 const app = express();
 const fileupload = require('express-fileupload');
 require('dotenv').config();
@@ -7,7 +6,7 @@ require('express-async-errors')
 const cors = require('cors')
 const swaggerDocument = require('./swagger-output.json')
 const swaggerUi = require('swagger-ui-express')
-const {startMetricServer, collectDefaultMetrics, httpRequestDurationSeconds, httpRequestCounter} = require('./utils/metrics')
+const {collectDefaultMetrics, httpRequestDurationSeconds, httpRequestCounter} = require('./utils/metrics')
 
 const authRouter = require('./routers/auth')
 const userRouter = require('./routers/user')
@@ -18,7 +17,6 @@ const errorHandler = require('./middleware/error-handler');
 const notFound = require('./middleware/not-found')
 const authMiddleware = require('./middleware/authorization')
 const authAdmin = require('./middleware/auth-admin');
-
 
 const expireFn = require('./utils/expire-function');
 const expiryNotifFn = require('./utils/expiry-notif-fn');
@@ -48,19 +46,8 @@ app.use('/api/v1/cms/admin', authMiddleware, authAdmin, adminRouter)
 app.use(notFound)
 app.use(errorHandler)
 
-const port = process.env.PORT || 3000
-
-const start = async() => {
-    try {
-        await connectDB(process.env.MONGO_URI)
-        app.listen(port, () => console.log(`Server now listening on port ${port}`));
-        startMetricServer();
-    } catch (error) {
-        console.log(error)
-    }
-};
-
-start();
 setInterval(expireFn, 3600 * 1000)
 setInterval(expiryNotifFn, 86400 * 1000)
 setInterval(expiredNotifFn, 86400 * 1000)
+
+module.exports = app;
