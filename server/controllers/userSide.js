@@ -263,7 +263,7 @@ const makeClaim = async(req, res) => {
     const claims = policy.claims > 0 ? policy.claims + 1 : 1;
     policy.claims = claims;
     await policy.save()
-    const user = await dbResponseDurationSecondsFn(() => Person.findOneAndUpdate({_id: userId}, {...req.user, claims: req.user.claims + 1}, {new: true, runValidators: true}), 'create_user_claim');
+    const user = await dbResponseDurationSecondsFn(() => Person.findOneAndUpdate({_id: userId}, {...req.user, claims: Number(req.user.claims) + 1}, {new: true, runValidators: true}), 'create_user_claim');
     res.status(StatusCodes.CREATED).json({claim})
 }
 

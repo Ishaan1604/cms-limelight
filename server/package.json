@@ -21,6 +21,7 @@
     "express-fileupload": "^1.5.0",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.2",
+    "mime-type": "^4.0.0",
     "mongoose": "^8.3.5",
     "prom-client": "^15.1.2",
     "response-time": "^2.3.2",

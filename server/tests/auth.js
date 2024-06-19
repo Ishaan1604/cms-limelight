@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("../../src/app");
 const {StatusCodes} = require('http-status-codes')
+const bcrypt = require('bcrypt')
 
 
 // Testing the registration function
@@ -25,7 +26,8 @@ describe('Testing the registration function', () => {
         expect(response.body.person).toHaveProperty('_id')
         expect(response.body.person).toHaveProperty('name', admin.name)
         expect(response.body.person).toHaveProperty('email', admin.email)
-        expect(response.body.person).toHaveProperty('password', admin.password)
+        expect(response.body.person).toHaveProperty('password')
+        expect(await bcrypt.compare(admin.password, response.body.person.password)).toEqual(true)
         expect(response.body.person).toHaveProperty('personType', 'admin')
 
     });
@@ -50,7 +52,8 @@ describe('Testing the registration function', () => {
         expect(response.body.person).toHaveProperty('_id')
         expect(response.body.person).toHaveProperty('name', user.name)
         expect(response.body.person).toHaveProperty('email', user.email)
-        expect(response.body.person).toHaveProperty('password', user.password)
+        expect(response.body.person).toHaveProperty('password')
+        expect(await bcrypt.compare(admin.password, response.body.person.password)).toEqual(true)
         expect(response.body.person).toHaveProperty('personType', 'user')
 
     });
@@ -131,7 +134,8 @@ describe('Testing the login function', () => {
         expect(response.body.person).toHaveProperty('_id')
         expect(response.body.person).toHaveProperty('name')
         expect(response.body.person).toHaveProperty('email', user.email)
-        expect(response.body.person).toHaveProperty('password', user.password)
+        expect(response.body.person).toHaveProperty('password')
+        expect(await bcrypt.compare(user.password, response.body.person.password)).toEqual(true)
         expect(response.body.person).toHaveProperty('personType', 'user')
 
     });
@@ -199,7 +203,8 @@ describe('Testing the reset password function', () => {
         expect(response.body.person).toHaveProperty('_id')
         expect(response.body.person).toHaveProperty('name')
         expect(response.body.person).toHaveProperty('email', user.email)
-        expect(response.body.person).toHaveProperty('password', user.password)
+        expect(response.body.person).toHaveProperty('password')
+        expect(await bcrypt.compare(user.password, response.body.person.password)).toEqual(true)
         expect(response.body.person).toHaveProperty('personType', 'user')
 
     });

@@ -209,7 +209,7 @@ const updateClaim = async(req, res) => {
 
     claim.status = req.body.status;
 
-    await dbResponseDurationSecondsFn(() => claim.save(), 'update_claim');
+    await dbResponseDurationSecondsFn(() => Claim.findOneAndUpdate({_id: claim._id}, {...claim}, {new: true, runValidators: true}), 'update_claim');
     
     const user = await Person.findOne({_id: claim.userId, personType: 'user'})
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
