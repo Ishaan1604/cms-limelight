@@ -44,6 +44,36 @@ describe('test the create policy function', () => {
         expect(response.body.policy).toHaveProperty('validity', policy.validity)
         expect(response.body.policy).toHaveProperty('active', true)
         expect(response.body.policy).toHaveProperty('claims', 0)
+
+
+        const policy2 = {
+            name: 'Example 1',
+            policyType: 'Life',
+            description: 'Blah blah blah',
+            cost: '$200/week for 6 months',
+            claimAmount: 100000,
+            validity: '0 years,10 months',
+            active: 'false',
+        }
+
+        const policy3 = {
+            name: 'txamplt 1',
+            policyType: 'Auto',
+            description: 'Blah blah blah',
+            cost: '$200/week for 6 months',
+            claimAmount: 100000,
+            validity: '0 years,11 months',
+        }
+
+        await request(app)
+            .post('/api/v1/cms/admin/policies')
+            .send(policy2)
+            .set('Authorization', `Bearer ${token}`)
+
+        await request(app)
+            .post('/api/v1/cms/admin/policies')
+            .send(policy3)
+            .set('Authorization', `Bearer ${token}`)
     })
 
     it('returns a validation error due to a missing value', async () => {
@@ -151,7 +181,7 @@ describe('Testing the get all  policy function', () => {
 
     it('should return the first two policies alphabetically', async() => {
         const response = await request(app)
-            .get('/api/v1/cms/policies?limit=2')
+            .get('/api/v1/cms/policies?limit=2&active=true false')
             .set('Authorization', `Bearer ${token}`)
         
         expect(response.status).toBe(StatusCodes.OK)
@@ -163,7 +193,7 @@ describe('Testing the get all  policy function', () => {
 
     it('should return the last policy alphabetically', async() => {
         const response = await request(app)
-            .get('/api/v1/cms/policies?limit=2&page=2')
+            .get('/api/v1/cms/policies?limit=2&page=2active=true false')
             .set('Authorization', `Bearer ${token}`)
         
         expect(response.status).toBe(StatusCodes.OK)
@@ -270,6 +300,22 @@ describe('test the delete policy function', () => {
         expect(response.body.policy).toHaveProperty('validity')
         expect(response.body.policy).toHaveProperty('active')
         expect(response.body.policy).toHaveProperty('claims')
+
+
+        const policy1 = {
+            name: 'Example 1',
+            policyType: 'Health',
+            description: 'Blah blah blah',
+            cost: '$200/week for 6 months',
+            claimAmount: 100000,
+            validity: '0 years,6 months',
+        }
+
+
+        await request(app)
+            .post('/api/v1/cms/admin/policies')
+            .send(policy1)
+            .set('Authorization', `Bearer ${token}`)
     })
     it ('should return a not found error', async () => {
         const response = await request(app)

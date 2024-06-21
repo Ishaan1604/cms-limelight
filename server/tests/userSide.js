@@ -8,6 +8,7 @@ let token = '';
 let user;
 let policy;
 let userPolicy;
+let userPolicies;
 beforeAll(async () => {
     const {body} = request(app).post('/api/v1/cms/login').send({
         email: 'user@gmail.com',
@@ -100,7 +101,7 @@ describe('Testing the update user function', () => {
 
 // Testing the add policy function
 describe('Testing the add policy function', async () => {
-    const {body: {policies}} = await request(app).get('/api/v1/cms/policies').set('Authorization', `Bearer ${token}`)
+    const {body: {policies}} = await request(app).get('/api/v1/cms/policies?active=true false').set('Authorization', `Bearer ${token}`)
     policy = policies.pop();
 
     it ('should create a new user policy', async () => {
@@ -122,6 +123,13 @@ describe('Testing the add policy function', async () => {
         expect(response.body.myPolicy).toHaveProperty('expired', false)
 
         userPolicy = response.body.myPolicy;
+        await request(app)
+            .post(`/api/v1/cms/user/user/${policies[0]._id}`)
+            .set('Authorization', `Bearer ${token}`)
+
+        await request(app)
+            .post(`/api/v1/cms/user/user/${policies[1]._id}`)
+            .set('Authorization', `Bearer ${token}`)
     })
 })
 
@@ -135,6 +143,7 @@ describe('Testing the get all user policy function', () => {
         expect(response.status).toBe(StatusCodes.OK)
 
         expect(response.body).toHaveProperty('myPolicies')
+        const userPolicies = response.body.myPolicies;
     })
 
     it('should return all the user policies with a t in their policyName', async() => {
@@ -171,9 +180,10 @@ describe('Testing the get all user policy function', () => {
         expect(response.status).toBe(StatusCodes.OK)
 
         expect(response.body).toHaveProperty('myPolicies')
-        for (let single_policy in response.body.myPolicies) {
-            expect(single_policy.expired).toBe('true')
-        }
+        expect(response.body.myPolicies.length).toBe(0)
+        // for (let single_policy in response.body.myPolicies) {
+        //     expect(single_policy.expired).toBe('true')
+        // }
     })
 
     it('should return all the user policies for a particular policy', async() => {
@@ -295,6 +305,30 @@ describe('Testing the make claim function', () => {
         expect(policy_after.claims).toBe(policy.claims + 1)
         expect(user_after.claims).toBe(user.claims + 1)
         expect(Number(userPolicy_after.amountRemaining)).toBe(Number(userPolicy.amountRemaining) * 9 / 10)
+
+        const claim2 = {
+            policyName: userPolicies[1].policyName,
+            policyType: userPolicies[1].policyType, 
+            description: 'died',
+            claimAmount: Number(userPolicies[1].amountRemaining) / 10,
+            document,
+        }
+
+        const claim3 = {
+            policyName: userPolicies[2].policyName,
+            policyType: userPolicies[2].policyType, 
+            description: 'died',
+            claimAmount: Number(userPolicies[2].amountRemaining) / 10,
+            document,
+        }
+
+        await request(app)
+            .post(`/api/v1/cms/user/user/myPolicies/${userPolicies[1]._id}`)
+            .send(claim2)
+
+        await request(app)
+            .post(`/api/v1/cms/user/user/myPolicies/${userPolicies[2]._id}`)
+            .send(claim3)
 
 
     })

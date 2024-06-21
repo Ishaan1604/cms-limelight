@@ -24,7 +24,7 @@ describe('Testing the get all users function', () => {
         expect(response.status).toBe(StatusCodes.OK)
 
         expect(response.body).toHaveProperty('users')
-        user = response.body.users.pop();
+        user = response.body.users[0];
     })
 
     it('should return all the users with a t in their name', async() => {
@@ -176,9 +176,10 @@ describe('Testing the get all claims function', async() => {
         expect(response.status).toBe(StatusCodes.OK)
 
         expect(response.body).toHaveProperty('claims')
-        for (let single_claim in response.body.claims) {
-            expect(single_claim.status).toBe('rejected')
-        }
+        expect(response.body.claims.length).toBe(0)
+        // for (let single_claim in response.body.claims) {
+        //     expect(single_claim.status).toBe('rejected')
+        // }
     })
     
     it('should return all the claims for a policy', async() => {
