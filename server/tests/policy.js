@@ -85,6 +85,94 @@ describe('test the create policy function', () => {
     })
 })
 
+// Testing the get all policy function
+describe('Testing the get all  policy function', () => {
+    it('should get all policy', async() => {
+        const response = await request(app)
+            .get('/api/v1/cms/policies')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('policies')
+    })
+
+    it('should return all the policies with a t in their policyName', async() => {
+        const response = await request(app)
+            .get('/api/v1/cms/policies?policyName=t')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('policies')
+        for (let single_policy in response.body.policies) {
+            expect(single_policy.name).toMatch(/(.*)t(.*)/)
+        }
+    })
+
+    it('should return all the Health policy', async() => {
+        const response = await request(app)
+            .get('/api/v1/cms/policies?policyType=Health')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('policies')
+        for (let single_policy in response.body.policies) {
+            expect(single_policy.policyType).toBe('Health')
+        }
+    })
+
+    it('should return all the expired policies', async() => {
+        const response = await request(app)
+            .get(`/api/v1/cms/policies?active=false`)
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('policies')
+        for (let single_policy in response.body.policies) {
+            expect(single_policy.active).toBe('false')
+        }
+    })
+
+    it('should return all the policies sorted by policyType', async() => {
+        const response = await request(app)
+            .get('/api/v1/cms/policies?sort=policyType')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('policies')
+        for (let i = 1; i <= response.body.policies.length; i++ ) {
+            expect(response.body.policies[i].policyType).toBeGreaterThan(response.body.policies[i - 1].policyType)
+        }
+    })
+
+    it('should return the first two policies alphabetically', async() => {
+        const response = await request(app)
+            .get('/api/v1/cms/policies?limit=2')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('policies')
+        expect(response.body.policies.length).toEqual(2)
+        expect(response.body.policies[1].name).toBeGreaterThan(response.body.policies[0].name)
+    })
+
+    it('should return the last policy alphabetically', async() => {
+        const response = await request(app)
+            .get('/api/v1/cms/policies?limit=2&page=2')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('policies')
+        expect(response.body.policies.length).toEqual(1)
+    })
+})
+
 // Testing the get policy function
 describe('test the get policy function', () => {
     it ('should return the policy', async () => {

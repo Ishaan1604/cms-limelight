@@ -125,6 +125,107 @@ describe('Testing the add policy function', async () => {
     })
 })
 
+// Testing the get all user policy function
+describe('Testing the get all user policy function', () => {
+    it('should get all user policy', async() => {
+        const response = await request(app)
+            .get('/api/v1/cms/user/user/myPolicies')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('myPolicies')
+    })
+
+    it('should return all the user policies with a t in their policyName', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myPolicies?policyName=t')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('myPolicies')
+        for (let single_policy in response.body.myPolicies) {
+            expect(single_policy.policyName).toMatch(/(.*)t(.*)/)
+        }
+    })
+
+    it('should return all the user Health policy', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myPolicies?policyType=Health')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('myPolicies')
+        for (let single_policy in response.body.myPolicies) {
+            expect(single_policy.policyType).toBe('Health')
+        }
+    })
+
+    it('should return all the expired user policies', async() => {
+        const response = await request(app)
+            .get(`api/v1/cms/user/user/myPolicies?expired=true`)
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('myPolicies')
+        for (let single_policy in response.body.myPolicies) {
+            expect(single_policy.expired).toBe('true')
+        }
+    })
+
+    it('should return all the user policies for a particular policy', async() => {
+        const response = await request(app)
+            .get(`api/v1/cms/user/user/myPolicies?policyId=${policy._id}`)
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('myPolicies')
+        for (let single_policy in response.body.myPolicies) {
+            expect(single_policy.policyId).toBe(`${policy._id}`)
+        }
+    })
+
+    it('should return all the user policies sorted by policyName', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myPolicies?sort=policyName')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('myPolicies')
+        for (let i = 1; i <= response.body.myPolicies.length; i++ ) {
+            expect(response.body.myPolicies[i].policyName).toBeGreaterThan(response.body.myPolicies[i - 1].policyName)
+        }
+    })
+
+    it('should return the first two user policies validity wise', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myPolicies?limit=2')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('myPolicies')
+        expect(response.body.myPolicies.length).toEqual(2)
+        expect(response.body.myPolicies[1].validity).toBeGreaterThan(response.body.myPolicies[0].validity)
+    })
+
+    it('should return the last user policy validity wise', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myPolicies?limit=2&page=2')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('myPolicies')
+        expect(response.body.myPolicies.length).toEqual(1)
+    })
+})
+
 // Testing the get user policy function
 describe('Testing the get user policy function', () => {
     it('should return the user policy', async () => {
@@ -268,5 +369,107 @@ describe('Testing the make claim function', () => {
         expect(response.status).toBe(400)
 
         expect(response.body).toHaveProperty('msg')
+    })
+})
+
+// Testing the get all user claims function
+describe('Testing the get all user claims function', () => {
+    it('should return all the user claims', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myClaims')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('claims')
+        claim = response.body.claims.pop();
+    })
+
+    it('should return all the user claims with a t in their policyName', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myClaims?policyName=t')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('claims')
+        for (let single_claim in response.body.claims) {
+            expect(single_claim.policyName).toMatch(/(.*)t(.*)/)
+        }
+    })
+
+    it('should return all the user Health policy claims', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myClaims?policyType=Health')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('claims')
+        for (let single_claim in response.body.claims) {
+            expect(single_claim.policyType).toBe('Health')
+        }
+    })
+
+    it('should return all the rejected user claims', async() => {
+        const response = await request(app)
+            .get(`api/v1/cms/user/user/myClaims?status=rejected`)
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('claims')
+        for (let single_claim in response.body.claims) {
+            expect(single_claim.status).toBe('rejected')
+        }
+    })
+
+    it('should return all the user claims for a particular policy', async() => {
+        const response = await request(app)
+            .get(`api/v1/cms/user/user/myClaims?policyId=${policy._id}`)
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('claims')
+        for (let single_claim in response.body.claims) {
+            expect(single_claim.policyId).toBe(`${policy._id}`)
+        }
+    })
+
+    it('should return all the user claims sorted by policyName', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myClaims?sort=policyName')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('claims')
+        for (let i = 1; i <= response.body.claims.length; i++ ) {
+            expect(response.body.claims[i].policyName).toBeGreaterThan(response.body.claims[i - 1].policyName)
+        }
+    })
+
+    it('should return the first two user claims chronologically', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myClaims?limit=2')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('claims')
+        expect(response.body.claims.length).toEqual(2)
+        expect(response.body.claims[1].updatedAt).toBeGreaterThan(response.body.claims[0].updatedAt)
+    })
+
+    it('should return the last user claim choronologically', async() => {
+        const response = await request(app)
+            .get('api/v1/cms/user/user/myClaims?limit=2&page=2')
+            .set('Authorization', `Bearer ${token}`)
+        
+        expect(response.status).toBe(StatusCodes.OK)
+
+        expect(response.body).toHaveProperty('claims')
+        expect(response.body.claims.length).toEqual(1)
     })
 })

@@ -60,14 +60,14 @@ describe('Testing the registration function', () => {
     
     it('should return a unique token', async () => {
         const user1 = {
-            name: 'user1',
-            email: 'user1@gmail.com',
+            name: 'tuser1',
+            email: 'user1t@gmail.com',
             password: 'user123'
         };
 
         const user2 = {
-            name: 'user2',
-            email: 'user2@gmail.com',
+            name: 'user2v',
+            email: 'vuser2@gmail.com',
             password: 'user123'
         };
 
