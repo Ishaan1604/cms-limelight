@@ -22,7 +22,7 @@ function ResetPassword() {
     e.preventDefault();
     setIsLoading(true)
     try {
-      await axios.post('http://localhost:3000/api/v1/cms/auth/resetPassword', loginInfo)
+      await axios.patch('http://localhost:3000/api/v1/cms/auth/resetPassword', loginInfo)
       
       setLoginInfo({email: '', password: ''})
       setIsTrue(true)

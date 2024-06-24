@@ -1,16 +1,23 @@
 const request = require("supertest");
-const app = require("../../src/app");
+const app = require('../app')
 const {StatusCodes} = require('http-status-codes');
+const {describe, it, beforeAll, expect, afterAll} = require("@jest/globals");
+const { start, stop } = require("../server");
 
 let token = '';
 let id = '';
 beforeAll(async () => {
-    const {body} = request(app).post('/api/v1/cms/login').send({
+    await start();
+    const response = await request(app).post('/api/v1/cms/auth/login').send({
         email: 'admin@gmail.com',
         password: 'admin123',
     })
 
-    token = body.token
+    token = response.body.token
+})
+
+afterAll(async() => {
+    await stop();
 })
 
 // Testing the create policy function
@@ -44,7 +51,6 @@ describe('test the create policy function', () => {
         expect(response.body.policy).toHaveProperty('validity', policy.validity)
         expect(response.body.policy).toHaveProperty('active', true)
         expect(response.body.policy).toHaveProperty('claims', 0)
-
 
         const policy2 = {
             name: 'Example 1',
@@ -135,7 +141,7 @@ describe('Testing the get all  policy function', () => {
         expect(response.status).toBe(StatusCodes.OK)
 
         expect(response.body).toHaveProperty('policies')
-        for (let single_policy in response.body.policies) {
+        for (let single_policy of response.body.policies) {
             expect(single_policy.name).toMatch(/(.*)t(.*)/)
         }
     })
@@ -148,7 +154,7 @@ describe('Testing the get all  policy function', () => {
         expect(response.status).toBe(StatusCodes.OK)
 
         expect(response.body).toHaveProperty('policies')
-        for (let single_policy in response.body.policies) {
+        for (let single_policy of response.body.policies) {
             expect(single_policy.policyType).toBe('Health')
         }
     })
@@ -161,21 +167,21 @@ describe('Testing the get all  policy function', () => {
         expect(response.status).toBe(StatusCodes.OK)
 
         expect(response.body).toHaveProperty('policies')
-        for (let single_policy in response.body.policies) {
-            expect(single_policy.active).toBe('false')
+        for (let single_policy of response.body.policies) {
+            expect(single_policy.active).toBe(false)
         }
     })
 
     it('should return all the policies sorted by policyType', async() => {
         const response = await request(app)
-            .get('/api/v1/cms/policies?sort=policyType')
+            .get('/api/v1/cms/policies?sort=policyType&active=true false')
             .set('Authorization', `Bearer ${token}`)
         
         expect(response.status).toBe(StatusCodes.OK)
 
         expect(response.body).toHaveProperty('policies')
-        for (let i = 1; i <= response.body.policies.length; i++ ) {
-            expect(response.body.policies[i].policyType).toBeGreaterThan(response.body.policies[i - 1].policyType)
+        for (let i = 1; i < response.body.policies.length; i++ ) {
+            expect(response.body.policies[i].policyType > response.body.policies[i - 1].policyType).toBe(true)
         }
     })
 
@@ -188,12 +194,12 @@ describe('Testing the get all  policy function', () => {
 
         expect(response.body).toHaveProperty('policies')
         expect(response.body.policies.length).toEqual(2)
-        expect(response.body.policies[1].name).toBeGreaterThan(response.body.policies[0].name)
+        expect(response.body.policies[1].name >= response.body.policies[0].name).toBe(true)
     })
 
     it('should return the last policy alphabetically', async() => {
         const response = await request(app)
-            .get('/api/v1/cms/policies?limit=2&page=2active=true false')
+            .get('/api/v1/cms/policies?limit=2&page=2&active=true false')
             .set('Authorization', `Bearer ${token}`)
         
         expect(response.status).toBe(StatusCodes.OK)
@@ -233,7 +239,7 @@ describe('test the get policy function', () => {
         
         expect(response.status).toBe(StatusCodes.NOT_FOUND)
 
-        expect(response.body).toHaveProperty('msg', 'No policy with id: 1 found')
+        expect(response.body).toHaveProperty('msg', 'No item found with id : 1')
     })
 })
 
@@ -275,7 +281,7 @@ describe('test the update policy function', () => {
         
         expect(response.status).toBe(StatusCodes.NOT_FOUND)
 
-        expect(response.body).toHaveProperty('msg', 'No policy with id: 1 found')
+        expect(response.body).toHaveProperty('msg', 'No item found with id : 1')
     })
 })
 
@@ -324,6 +330,6 @@ describe('test the delete policy function', () => {
         
         expect(response.status).toBe(StatusCodes.NOT_FOUND)
 
-        expect(response.body).toHaveProperty('msg', 'No policy with id: 1 found')
+        expect(response.body).toHaveProperty('msg', 'No item found with id : 1')
     })
 })

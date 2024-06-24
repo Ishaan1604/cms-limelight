@@ -1,9 +1,17 @@
 const request = require("supertest");
-const app = require("../../src/app");
+const app = require('../app');
 const {StatusCodes} = require('http-status-codes')
 const bcrypt = require('bcrypt')
+const {describe, it, expect, beforeAll, afterAll} = require("@jest/globals");
+const { start, stop } = require("../server");
 
+beforeAll(async() => {
+    await start();
+})
 
+afterAll(async() => {
+    await stop();
+})
 // Testing the registration function
 describe('Testing the registration function', () => {
     it('should create an admin', async () => {
@@ -53,7 +61,7 @@ describe('Testing the registration function', () => {
         expect(response.body.person).toHaveProperty('name', user.name)
         expect(response.body.person).toHaveProperty('email', user.email)
         expect(response.body.person).toHaveProperty('password')
-        expect(await bcrypt.compare(admin.password, response.body.person.password)).toEqual(true)
+        expect(await bcrypt.compare(user.password, response.body.person.password)).toEqual(true)
         expect(response.body.person).toHaveProperty('personType', 'user')
 
     });
@@ -193,7 +201,7 @@ describe('Testing the reset password function', () => {
         };
 
         const response = await request(app)
-            .post('/api/v1/cms/auth/resetPassword')
+            .patch('/api/v1/cms/auth/resetPassword')
             .send(user)
 
         expect(response.status).toBe(StatusCodes.OK)
@@ -216,7 +224,7 @@ describe('Testing the reset password function', () => {
         };
 
         const response = await request(app)
-            .post('/api/v1/cms/auth/resetPassword')
+            .patch('/api/v1/cms/auth/resetPassword')
             .send(user)
 
         expect(response.status).toBe(StatusCodes.BAD_REQUEST)
@@ -230,7 +238,7 @@ describe('Testing the reset password function', () => {
         };
 
         const response = await request(app)
-            .post('/api/v1/cms/auth/resetPassword')
+            .patch('/api/v1/cms/auth/resetPassword')
             .send(user)
 
         expect(response.status).toBe(StatusCodes.BAD_REQUEST)

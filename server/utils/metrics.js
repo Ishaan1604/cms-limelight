@@ -40,11 +40,16 @@ app.get('/metrics', async(req, res) => {
     return res.send(await client.register.metrics())
 })
 
+let server;
 const startMetricServer = async() => {
-    app.listen(PORT, () => {
+    server = app.listen(PORT, () => {
         console.log(`Metric server started on port ${PORT}`)
     })
 
+}
+
+const stopMetricServer = async() => {
+    if (server) server.close();
 }
 
 module.exports = {
@@ -53,4 +58,5 @@ module.exports = {
     httpRequestCounter,
     httpRequestDurationSeconds,
     dbResponseDurationSecondsFn,
+    stopMetricServer,
 }
