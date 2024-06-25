@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server.js",
-    "test": "jest",
-    "genDocs": "node swagger.js"
+    "genDocs": "node swagger.js",
+    "test": "jest --runInBand tests/auth tests/policy tests/userSide tests/adminSide",
+    "testRunner": "node testRunner.js"
   },
   "keywords": [],
   "author": "",

@@ -17,6 +17,10 @@ beforeAll(async () => {
     token = body.token
 })
 
+beforeEach(() => console.log(`Running ${expect.getState().currentTestName}`))
+
+afterEach(() => console.log(`Finished ${expect.getState().currentTestName}`))
+
 afterAll(async() => {
     await stop();
 })

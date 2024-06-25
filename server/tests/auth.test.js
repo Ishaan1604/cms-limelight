@@ -2,12 +2,16 @@ const request = require("supertest");
 const app = require('../app');
 const {StatusCodes} = require('http-status-codes')
 const bcrypt = require('bcrypt')
-const {describe, it, expect, beforeAll, afterAll} = require("@jest/globals");
+const {describe, it, expect, beforeAll, afterAll, beforeEach, afterEach} = require("@jest/globals");
 const { start, stop } = require("../server");
 
 beforeAll(async() => {
     await start();
 })
+
+beforeEach(() => console.log(`Running ${expect.getState().currentTestName}`))
+
+afterEach(() => console.log(`Finished ${expect.getState().currentTestName}`))
 
 afterAll(async() => {
     await stop();

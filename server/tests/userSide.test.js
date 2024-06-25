@@ -20,7 +20,10 @@ beforeEach(async () => {
     const {body} = await request(app).post('/api/v1/cms/auth/login').send({...user})
     token = body.token
     user = {name: body.person.name, email: body.person.email, password: 'userNew123', claims: body.person.claims}
+    console.log(`Running ${expect.getState().currentTestName}`)
 })
+
+afterEach(() => console.log(`Finished ${expect.getState().currentTestName}`))
 
 afterAll(async() => {
     await stop();

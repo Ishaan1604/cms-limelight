@@ -82,7 +82,15 @@ const getUserPolicy = async(req, res) => {
     // console.log(req.params)
     // const {policyId, userId} = req.filterObj;
 
-    const myPolicy = await dbResponseDurationSecondsFn(() => UserPolicy.findOne({_id: policyId, userId}), 'get_a_user_policy');
+    const searchObj = {
+        _id: policyId,
+    }
+
+    if(req.user.personType === 'user') {
+        searchObj.userId =  userId
+    }
+
+    const myPolicy = await dbResponseDurationSecondsFn(() => UserPolicy.findOne({...searchObj}), 'get_a_user_policy');
     if (!myPolicy) {
         throw new NotFoundError(`No policy with id: ${policyId} for user: ${req.user.name}`)
     }
