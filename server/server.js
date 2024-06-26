@@ -31,4 +31,4 @@ module.exports = {
     start, 
     stop,
 }
-// start();
+start();

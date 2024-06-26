@@ -6,7 +6,6 @@
   "scripts": {
     "start": "nodemon server.js",
     "genDocs": "node swagger.js",
-    "test": "jest --runInBand tests/auth tests/policy tests/userSide tests/adminSide",
     "testRunner": "node testRunner.js"
   },
   "keywords": [],
