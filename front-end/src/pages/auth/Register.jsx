@@ -31,10 +31,10 @@ function Register() {
     try {
       const {data : {person, token}} = await axios.post('http://localhost:3000/api/v1/cms/auth/register', formData)
 
-      localStorage.token = token;
-      localStorage.email = person.email
-      localStorage.name = person.name
-      localStorage.role = person.personType
+      localStorage.setItem('token', token)
+      localStorage.setItem('email', person.email)
+      localStorage.setItem('name', person.name)
+      localStorage.setItem('role', person.personType)
       
       setLoginInfo({name: '', email: '', password: ''})
       setIsTrue(true)

@@ -33,7 +33,6 @@ function Home() {
           Authorization: `Bearer ${localStorage.token}`
         }
       })
-      
       setUpdates({policies, myPolicies, claims})
     } catch (error) {
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
@@ -46,15 +45,17 @@ function Home() {
     e.preventDefault();
     try {
       setIsLoading(true)
-
+      
       const {data} = await axios.patch(`http://localhost:3000/api/v1/cms/user/${localStorage.name}/updateUser`, values, {
         headers: {
           Authorization: `Bearer ${localStorage.token}`
         }
       })
-      localStorage.name = data.user.name;
-      localStorage.email = data.user.email;
-      localStorage.token = data.token
+
+      localStorage.setItem('name', data.user.name)
+      localStorage.setItem('email', data.user.email)
+      localStorage.setItem('token', data.token)
+      
       setValues({name: data.user.name, email: data.user.email})
     } catch (error) {
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
@@ -88,7 +89,6 @@ function Home() {
       navigate('/auth/login')
       return;
     }
-
     navigate(`/${localStorage.name}`)
     fetchData();
   }, [])

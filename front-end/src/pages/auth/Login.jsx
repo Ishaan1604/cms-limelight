@@ -23,12 +23,12 @@ function Login() {
     setIsLoading(true)
     try {
       const {data : {person, token}} = await axios.post('http://localhost:3000/api/v1/cms/auth/login', loginInfo)
+  
+      localStorage.setItem('token', token)
+      localStorage.setItem('email', person.email)
+      localStorage.setItem('name', person.name)
+      localStorage.setItem('role', person.personType)
 
-      localStorage.token = token;
-      localStorage.email = person.email
-      localStorage.name = person.name
-      localStorage.role = person.personType
-      
       setLoginInfo({email: '', password: ''})
       setIsTrue(true)
       navigate(`/${person.name}`)
@@ -57,7 +57,7 @@ function Login() {
     <section className='auth-section flex column center'>
       {
         isTrue && <div className='success-div'>
-          <p>Registered user successfully</p>
+          <p>Logged in user successfully</p>
         </div>
       }
       {

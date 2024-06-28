@@ -8,7 +8,7 @@ function RadioButton({names, id}) {
             return (
                 <div className='button-row'>
                     <button type='radio' name={name} id={id} className='radio-btn'></button>
-                    <label for={name} className='btn-label'>{name}</label>
+                    <label htmlFor={name} className='btn-label'>{name}</label>
                 </div>
             )
         })

@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {Link, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import { FormRow } from '../../components'
 
-function Login() {
+function ResetPassword() {
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
@@ -22,16 +22,11 @@ function Login() {
     e.preventDefault();
     setIsLoading(true)
     try {
-      const {data : {person, token}} = await axios.post('http://localhost:3000/api/v1/cms/auth/login', loginInfo)
-
-      localStorage.token = token;
-      localStorage.email = person.email
-      localStorage.name = person.name
-      localStorage.role = person.personType
+      await axios.patch('http://localhost:3000/api/v1/cms/auth/resetPassword', loginInfo)
       
       setLoginInfo({email: '', password: ''})
       setIsTrue(true)
-      navigate(`/${person.name}`)
+      navigate(`/auth/login`)
     } catch (error) {
       setError({err: true, msg: error?.response?.data?.msg || 'Something went wrong'})
     } finally {
@@ -57,7 +52,7 @@ function Login() {
     <section className='auth-section flex column center'>
       {
         isTrue && <div className='success-div'>
-          <p>Registered user successfully</p>
+          <p>Changed password successfully</p>
         </div>
       }
       {
@@ -69,19 +64,11 @@ function Login() {
         <form onSubmit={handleSubmit} onChange={handleChange} className='form'>
           <FormRow type='email' name='email' id='email' value={loginInfo.email}/>
           <FormRow type='password' name='password' id='password' value={loginInfo.password}/>
-          <button type='submit' className='btn submit-btn'>Login</button>
+          <button type='submit' className='btn submit-btn'>Reset Password</button>
         </form>
-        <p style={{textAlign: 'center', marginBottom: '2%'}}>
-          Do not have an account?
-          <Link style={{marginLeft: '2%'}}to='/auth/register'>Register</Link>
-        </p>
-        <p style={{textAlign: 'center', marginBottom: '2%'}}>
-          Forgot your password?
-          <Link style={{marginLeft: '2%'}}to='/auth/resetPassword'>Reset Password</Link>
-        </p>
       </div>
     </section> 
   )
 }
 
-export default Login
+export default ResetPassword
